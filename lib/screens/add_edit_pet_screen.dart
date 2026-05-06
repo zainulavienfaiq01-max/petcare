@@ -27,6 +27,13 @@ class _AddEditPetScreenState extends State<AddEditPetScreen> {
   String? _photoPath;
   bool _isLoading = false;
 
+  // New fields for schedule generation
+  TimeOfDay? _feedingTime;
+  DateTime? _vaccinationDate;
+  int? _groomingIntervalDays;
+  DateTime? _doctorCheckDate;
+
+
   @override
   void initState() {
     super.initState();
@@ -71,19 +78,78 @@ class _AddEditPetScreenState extends State<AddEditPetScreen> {
     
     setState(() => _isLoading = true);
     
-    final provider = Provider.of<PetProvider>(context, listen: false);
+    final petProvider = Provider.of<PetProvider>(context, listen: false);
     final newPet = Pet(
       id: widget.pet?.id ?? DateTime.now().millisecondsSinceEpoch.toString(),
       name: _nameController.text,
       type: _selectedType,
       age: int.parse(_ageController.text),
       weight: double.parse(_weightController.text),
+      photoPath: _photoPath,
+      feedingTime: _feedingTime,
+      vaccinationDate: _vaccinationDate,
+      groomingIntervalDays: _groomingIntervalDays,
+      doctorCheckDate: _doctorCheckDate,
     );
 
     if (widget.pet == null) {
-      await provider.addPet(newPet);
+      await petProvider.addPet(newPet);
     } else {
-      await provider.updatePet(newPet);
+      await petProvider.updatePet(newPet);
+    }
+
+    // Generate schedules automatically
+    final scheduleProvider = Provider.of<ScheduleProvider>(context, listen: false);
+    final now = DateTime.now();
+    // Feeding schedules for next 7 days
+    if (newPet.feedingTime != null) {
+      for (int i = 0; i < 7; i++) {
+        final date = now.add(Duration(days: i));
+        final dateTime = DateTime(date.year, date.month, date.day, newPet.feedingTime!.hour, newPet.feedingTime!.minute);
+        final schedule = Schedule(
+          id: '${newPet.id}_feed_${dateTime.millisecondsSinceEpoch}',
+          petId: newPet.id,
+          type: 'Makan',
+          dateTime: dateTime,
+        );
+        await scheduleProvider.addSchedule(schedule);
+      }
+    }
+    // Vaccination reminder
+    if (newPet.vaccinationDate != null) {
+      final schedule = Schedule(
+        id: '${newPet.id}_vacc',
+        petId: newPet.id,
+        type: 'Vaksin',
+        dateTime: newPet.vaccinationDate!,
+      );
+      await scheduleProvider.addSchedule(schedule);
+    }
+    // Grooming schedule based on interval
+    if (newPet.groomingIntervalDays != null && newPet.groomingIntervalDays! > 0) {
+      DateTime nextDate = now;
+      for (int i = 0; i < 30; i++) {
+        if (i % newPet.groomingIntervalDays! == 0) {
+          final schedule = Schedule(
+            id: '${newPet.id}_groom_${nextDate.millisecondsSinceEpoch}',
+            petId: newPet.id,
+            type: 'Grooming',
+            dateTime: nextDate,
+          );
+          await scheduleProvider.addSchedule(schedule);
+        }
+        nextDate = nextDate.add(const Duration(days: 1));
+      }
+    }
+    // Doctor check-up reminder
+    if (newPet.doctorCheckDate != null) {
+      final schedule = Schedule(
+        id: '${newPet.id}_doctor',
+        petId: newPet.id,
+        type: 'Kontrol Dokter',
+        dateTime: newPet.doctorCheckDate!,
+      );
+      await scheduleProvider.addSchedule(schedule);
     }
 
     if (mounted) Navigator.pop(context);
