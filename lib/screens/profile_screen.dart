@@ -5,6 +5,7 @@ import '../providers/theme_provider.dart';
 import '../providers/auth_provider.dart';
 import '../utils/colors.dart';
 import '../utils/constants.dart';
+import 'login_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -37,7 +38,7 @@ class ProfileScreen extends StatelessWidget {
                 const SizedBox(height: 16),
                 
                 Text(
-                  authProvider.userName,
+                  authProvider.userName.isNotEmpty ? authProvider.userName : 'User',
                   style: GoogleFonts.poppins(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
@@ -66,7 +67,7 @@ class ProfileScreen extends StatelessWidget {
                       ListTile(
                         leading: const Icon(Icons.info_outline, color: AppColors.primaryPurple),
                         title: const Text('About'),
-                        subtitle: const Text('PetCare v1.0.0'),
+                        subtitle: Text('${AppConstants.appName} v${AppConstants.appVersion}'),
                       ),
                       const Divider(height: 1),
                       ListTile(
@@ -88,15 +89,20 @@ class ProfileScreen extends StatelessWidget {
   void _showLogoutDialog(BuildContext context, AuthProvider authProvider) {
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
+      builder: (ctx) => AlertDialog(
         title: const Text('Logout'),
         content: const Text('Are you sure you want to logout?'),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancel')),
+          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
           TextButton(
-            onPressed: () {
-              authProvider.logout();
-              Navigator.popUntil(context, (route) => route.isFirst);
+            onPressed: () async {
+              await authProvider.logout();
+              if (context.mounted) {
+                Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (_) => const LoginScreen()),
+                  (route) => false,
+                );
+              }
             },
             child: const Text('Logout', style: TextStyle(color: AppColors.error)),
           ),

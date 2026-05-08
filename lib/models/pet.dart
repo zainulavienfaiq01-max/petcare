@@ -1,5 +1,4 @@
 import 'package:hive/hive.dart';
-import 'package:flutter/material.dart';
 
 part 'pet.g.dart';
 
@@ -23,15 +22,15 @@ class Pet extends HiveObject {
   @HiveField(5)
   String? photoPath;
 
-  // New fields
+  // Feeding time stored as minutes since midnight (e.g. 480 = 08:00)
   @HiveField(6)
-  TimeOfDay? feedingTime;
+  int? feedingTimeMinutes;
 
   @HiveField(7)
   DateTime? vaccinationDate;
 
   @HiveField(8)
-  int? groomingIntervalDays; // interval in days
+  int? groomingIntervalDays;
 
   @HiveField(9)
   DateTime? doctorCheckDate;
@@ -43,9 +42,15 @@ class Pet extends HiveObject {
     required this.age,
     required this.weight,
     this.photoPath,
-    this.feedingTime,
+    this.feedingTimeMinutes,
     this.vaccinationDate,
     this.groomingIntervalDays,
     this.doctorCheckDate,
   });
+
+  /// Helper to get feeding hour
+  int get feedingHour => (feedingTimeMinutes ?? 480) ~/ 60;
+
+  /// Helper to get feeding minute
+  int get feedingMinute => (feedingTimeMinutes ?? 0) % 60;
 }

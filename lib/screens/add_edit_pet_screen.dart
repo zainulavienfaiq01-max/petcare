@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
+import '../models/pet.dart';
 import '../providers/pet_provider.dart';
-import '../models/schedule.dart';
+import '../providers/schedule_provider.dart';
+import '../services/smart_schedule_service.dart';
 import '../utils/colors.dart';
 import '../utils/constants.dart';
 import '../widgets/custom_text_field.dart';
@@ -27,12 +29,12 @@ class _AddEditPetScreenState extends State<AddEditPetScreen> {
   String? _photoPath;
   bool _isLoading = false;
 
-  // New fields for schedule generation
+  // Smart scheduling fields
   TimeOfDay? _feedingTime;
   DateTime? _vaccinationDate;
-  int? _groomingIntervalDays;
+  int _groomingIntervalDays = 0;
   DateTime? _doctorCheckDate;
-
+  bool _enableAutoSchedule = true;
 
   @override
   void initState() {
@@ -43,6 +45,15 @@ class _AddEditPetScreenState extends State<AddEditPetScreen> {
       _weightController.text = widget.pet!.weight.toString();
       _selectedType = widget.pet!.type;
       _photoPath = widget.pet!.photoPath;
+      if (widget.pet!.feedingTimeMinutes != null) {
+        _feedingTime = TimeOfDay(
+          hour: widget.pet!.feedingHour,
+          minute: widget.pet!.feedingMinute,
+        );
+      }
+      _vaccinationDate = widget.pet!.vaccinationDate;
+      _groomingIntervalDays = widget.pet!.groomingIntervalDays ?? 0;
+      _doctorCheckDate = widget.pet!.doctorCheckDate;
     }
   }
 
@@ -73,12 +84,44 @@ class _AddEditPetScreenState extends State<AddEditPetScreen> {
     return null;
   }
 
+  Future<void> _selectFeedingTime() async {
+    final time = await showTimePicker(
+      context: context,
+      initialTime: _feedingTime ?? const TimeOfDay(hour: 8, minute: 0),
+    );
+    if (time != null) setState(() => _feedingTime = time);
+  }
+
+  Future<void> _selectVaccinationDate() async {
+    final date = await showDatePicker(
+      context: context,
+      initialDate: _vaccinationDate ?? DateTime.now().add(const Duration(days: 14)),
+      firstDate: DateTime.now(),
+      lastDate: DateTime.now().add(const Duration(days: 365)),
+    );
+    if (date != null) setState(() => _vaccinationDate = date);
+  }
+
+  Future<void> _selectDoctorDate() async {
+    final date = await showDatePicker(
+      context: context,
+      initialDate: _doctorCheckDate ?? DateTime.now().add(const Duration(days: 30)),
+      firstDate: DateTime.now(),
+      lastDate: DateTime.now().add(const Duration(days: 365)),
+    );
+    if (date != null) setState(() => _doctorCheckDate = date);
+  }
+
   Future<void> _savePet() async {
     if (!_formKey.currentState!.validate()) return;
     
     setState(() => _isLoading = true);
     
     final petProvider = Provider.of<PetProvider>(context, listen: false);
+    final scheduleProvider = Provider.of<ScheduleProvider>(context, listen: false);
+    
+    final isNewPet = widget.pet == null;
+    
     final newPet = Pet(
       id: widget.pet?.id ?? DateTime.now().millisecondsSinceEpoch.toString(),
       name: _nameController.text,
@@ -86,70 +129,41 @@ class _AddEditPetScreenState extends State<AddEditPetScreen> {
       age: int.parse(_ageController.text),
       weight: double.parse(_weightController.text),
       photoPath: _photoPath,
-      feedingTime: _feedingTime,
+      feedingTimeMinutes: _feedingTime != null
+          ? _feedingTime!.hour * 60 + _feedingTime!.minute
+          : null,
       vaccinationDate: _vaccinationDate,
-      groomingIntervalDays: _groomingIntervalDays,
+      groomingIntervalDays: _groomingIntervalDays > 0 ? _groomingIntervalDays : null,
       doctorCheckDate: _doctorCheckDate,
     );
 
-    if (widget.pet == null) {
+    if (isNewPet) {
       await petProvider.addPet(newPet);
-    } else {
-      await petProvider.updatePet(newPet);
-    }
-
-    // Generate schedules automatically
-    final scheduleProvider = Provider.of<ScheduleProvider>(context, listen: false);
-    final now = DateTime.now();
-    // Feeding schedules for next 7 days
-    if (newPet.feedingTime != null) {
-      for (int i = 0; i < 7; i++) {
-        final date = now.add(Duration(days: i));
-        final dateTime = DateTime(date.year, date.month, date.day, newPet.feedingTime!.hour, newPet.feedingTime!.minute);
-        final schedule = Schedule(
-          id: '${newPet.id}_feed_${dateTime.millisecondsSinceEpoch}',
-          petId: newPet.id,
-          type: 'Makan',
-          dateTime: dateTime,
-        );
-        await scheduleProvider.addSchedule(schedule);
-      }
-    }
-    // Vaccination reminder
-    if (newPet.vaccinationDate != null) {
-      final schedule = Schedule(
-        id: '${newPet.id}_vacc',
-        petId: newPet.id,
-        type: 'Vaksin',
-        dateTime: newPet.vaccinationDate!,
-      );
-      await scheduleProvider.addSchedule(schedule);
-    }
-    // Grooming schedule based on interval
-    if (newPet.groomingIntervalDays != null && newPet.groomingIntervalDays! > 0) {
-      DateTime nextDate = now;
-      for (int i = 0; i < 30; i++) {
-        if (i % newPet.groomingIntervalDays! == 0) {
-          final schedule = Schedule(
-            id: '${newPet.id}_groom_${nextDate.millisecondsSinceEpoch}',
-            petId: newPet.id,
-            type: 'Grooming',
-            dateTime: nextDate,
-          );
+      
+      // Auto-generate smart schedules for new pets
+      if (_enableAutoSchedule) {
+        final schedules = SmartScheduleService.generateSchedules(newPet);
+        for (final schedule in schedules) {
           await scheduleProvider.addSchedule(schedule);
         }
-        nextDate = nextDate.add(const Duration(days: 1));
+        
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                '🎉 ${newPet.name} added! ${schedules.length} care schedules auto-generated.',
+                style: GoogleFonts.poppins(),
+              ),
+              backgroundColor: AppColors.success,
+              duration: const Duration(seconds: 3),
+              behavior: SnackBarBehavior.floating,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            ),
+          );
+        }
       }
-    }
-    // Doctor check-up reminder
-    if (newPet.doctorCheckDate != null) {
-      final schedule = Schedule(
-        id: '${newPet.id}_doctor',
-        petId: newPet.id,
-        type: 'Kontrol Dokter',
-        dateTime: newPet.doctorCheckDate!,
-      );
-      await scheduleProvider.addSchedule(schedule);
+    } else {
+      await petProvider.updatePet(newPet);
     }
 
     if (mounted) Navigator.pop(context);
@@ -167,27 +181,35 @@ class _AddEditPetScreenState extends State<AddEditPetScreen> {
         child: Form(
           key: _formKey,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              GestureDetector(
-                onTap: _pickImage,
-                child: Container(
-                  width: 100,
-                  height: 100,
-                  decoration: BoxDecoration(
-                    gradient: AppColors.cardGradient1,
-                    shape: BoxShape.circle,
-                    boxShadow: AppColors.cardShadow,
-                  ),
-                  child: Center(
-                    child: Text(
-                      AppConstants.petTypeEmoji[_selectedType] ?? '🐾',
-                      style: const TextStyle(fontSize: 48),
+              // Pet photo placeholder
+              Center(
+                child: GestureDetector(
+                  onTap: _pickImage,
+                  child: Container(
+                    width: 100,
+                    height: 100,
+                    decoration: BoxDecoration(
+                      gradient: AppColors.cardGradient1,
+                      shape: BoxShape.circle,
+                      boxShadow: AppColors.cardShadow,
+                    ),
+                    child: Center(
+                      child: Text(
+                        AppConstants.petTypeEmoji[_selectedType] ?? '🐾',
+                        style: const TextStyle(fontSize: 48),
+                      ),
                     ),
                   ),
                 ),
               ),
               const SizedBox(height: 24),
               
+              // Basic info section
+              Text('Basic Information', style: Theme.of(context).textTheme.titleLarge),
+              const SizedBox(height: 12),
+
               CustomTextField(
                 controller: _nameController,
                 label: 'Pet Name',
@@ -198,45 +220,206 @@ class _AddEditPetScreenState extends State<AddEditPetScreen> {
               
               DropdownButtonFormField<String>(
                 value: _selectedType,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Pet Type',
-                  prefixIcon: const Icon(Icons.category_outlined),
+                  prefixIcon: Icon(Icons.category_outlined),
                 ),
                 items: AppConstants.petTypes.map((type) => DropdownMenuItem(
                   value: type,
-                  child: Text(type),
+                  child: Text('${AppConstants.petTypeEmoji[type]} $type'),
                 )).toList(),
                 onChanged: (value) => setState(() => _selectedType = value!),
               ),
               const SizedBox(height: 16),
               
-              CustomTextField(
-                controller: _ageController,
-                label: 'Age (years)',
-                icon: Icons.cake_outlined,
-                keyboardType: TextInputType.number,
-                validator: (v) => _validateNumber(v, 'Age'),
+              Row(
+                children: [
+                  Expanded(
+                    child: CustomTextField(
+                      controller: _ageController,
+                      label: 'Age (years)',
+                      icon: Icons.cake_outlined,
+                      keyboardType: TextInputType.number,
+                      validator: (v) => _validateNumber(v, 'Age'),
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: CustomTextField(
+                      controller: _weightController,
+                      label: 'Weight (kg)',
+                      icon: Icons.monitor_weight_outlined,
+                      keyboardType: TextInputType.number,
+                      validator: (v) => _validateNumber(v, 'Weight'),
+                    ),
+                  ),
+                ],
               ),
-              const SizedBox(height: 16),
-              
-              CustomTextField(
-                controller: _weightController,
-                label: 'Weight (kg)',
-                icon: Icons.monitor_weight_outlined,
-                keyboardType: TextInputType.number,
-                validator: (v) => _validateNumber(v, 'Weight'),
+
+              const SizedBox(height: 28),
+
+              // Smart scheduling section
+              Row(
+                children: [
+                  const Icon(Icons.auto_awesome, color: AppColors.accentPurple),
+                  const SizedBox(width: 8),
+                  Text('Smart Scheduling', style: Theme.of(context).textTheme.titleLarge),
+                ],
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 4),
+              Text(
+                'Auto-generate care schedules based on veterinary recommendations',
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+              const SizedBox(height: 12),
+
+              if (widget.pet == null)
+                SwitchListTile(
+                  title: Text('Enable Auto-Schedule', style: GoogleFonts.poppins(fontWeight: FontWeight.w500)),
+                  subtitle: Text(
+                    'Automatically create feeding, grooming & vaccination schedules',
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                  value: _enableAutoSchedule,
+                  onChanged: (v) => setState(() => _enableAutoSchedule = v),
+                  activeColor: AppColors.accentPurple,
+                  contentPadding: EdgeInsets.zero,
+                ),
+
+              const SizedBox(height: 8),
+
+              // Feeding time
+              Card(
+                child: ListTile(
+                  leading: Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      color: AppColors.info.withValues(alpha: 0.1),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: const Center(child: Text('🍖', style: TextStyle(fontSize: 20))),
+                  ),
+                  title: Text('Feeding Time', style: GoogleFonts.poppins(fontWeight: FontWeight.w500)),
+                  subtitle: Text(
+                    _feedingTime != null
+                        ? _feedingTime!.format(context)
+                        : 'Auto (based on age)',
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                  trailing: TextButton(
+                    onPressed: _selectFeedingTime,
+                    child: Text(_feedingTime != null ? 'Change' : 'Set'),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 8),
+
+              // Grooming interval
+              Card(
+                child: ListTile(
+                  leading: Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      color: AppColors.warning.withValues(alpha: 0.1),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: const Center(child: Text('✂️', style: TextStyle(fontSize: 20))),
+                  ),
+                  title: Text('Grooming Interval', style: GoogleFonts.poppins(fontWeight: FontWeight.w500)),
+                  subtitle: Text(
+                    _groomingIntervalDays > 0
+                        ? 'Every $_groomingIntervalDays days'
+                        : 'Auto (based on pet type)',
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                  trailing: DropdownButton<int>(
+                    value: _groomingIntervalDays,
+                    underline: const SizedBox(),
+                    items: const [
+                      DropdownMenuItem(value: 0, child: Text('Auto')),
+                      DropdownMenuItem(value: 14, child: Text('2 weeks')),
+                      DropdownMenuItem(value: 21, child: Text('3 weeks')),
+                      DropdownMenuItem(value: 28, child: Text('4 weeks')),
+                      DropdownMenuItem(value: 42, child: Text('6 weeks')),
+                    ],
+                    onChanged: (v) => setState(() => _groomingIntervalDays = v ?? 0),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 8),
+
+              // Vaccination date
+              Card(
+                child: ListTile(
+                  leading: Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      color: AppColors.error.withValues(alpha: 0.1),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: const Center(child: Text('💉', style: TextStyle(fontSize: 20))),
+                  ),
+                  title: Text('Vaccination', style: GoogleFonts.poppins(fontWeight: FontWeight.w500)),
+                  subtitle: Text(
+                    _vaccinationDate != null
+                        ? '${_vaccinationDate!.day}/${_vaccinationDate!.month}/${_vaccinationDate!.year}'
+                        : 'Auto (based on age)',
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                  trailing: TextButton(
+                    onPressed: _selectVaccinationDate,
+                    child: Text(_vaccinationDate != null ? 'Change' : 'Set'),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 8),
+
+              // Doctor check-up
+              Card(
+                child: ListTile(
+                  leading: Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      color: AppColors.success.withValues(alpha: 0.1),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: const Center(child: Text('🩺', style: TextStyle(fontSize: 20))),
+                  ),
+                  title: Text('Vet Check-up', style: GoogleFonts.poppins(fontWeight: FontWeight.w500)),
+                  subtitle: Text(
+                    _doctorCheckDate != null
+                        ? '${_doctorCheckDate!.day}/${_doctorCheckDate!.month}/${_doctorCheckDate!.year}'
+                        : 'Auto (in 30 days)',
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                  trailing: TextButton(
+                    onPressed: _selectDoctorDate,
+                    child: Text(_doctorCheckDate != null ? 'Change' : 'Set'),
+                  ),
+                ),
+              ),
+
+              const SizedBox(height: 28),
               
+              // Save button
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: _isLoading ? null : _savePet,
                   child: _isLoading
-                      ? const CircularProgressIndicator(color: Colors.white)
+                      ? const SizedBox(
+                          width: 20,
+                          height: 20,
+                          child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
+                        )
                       : Text(widget.pet == null ? 'Add Pet' : 'Save Changes'),
                 ),
               ),
+              const SizedBox(height: 16),
             ],
           ),
         ),

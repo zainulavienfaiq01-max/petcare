@@ -23,13 +23,17 @@ class PetAdapter extends TypeAdapter<Pet> {
       age: fields[3] as int,
       weight: fields[4] as double,
       photoPath: fields[5] as String?,
+      feedingTimeMinutes: fields[6] as int?,
+      vaccinationDate: fields[7] as DateTime?,
+      groomingIntervalDays: fields[8] as int?,
+      doctorCheckDate: fields[9] as DateTime?,
     );
   }
 
   @override
   void write(BinaryWriter writer, Pet obj) {
     writer
-      ..writeByte(6)
+      ..writeByte(10)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -41,7 +45,15 @@ class PetAdapter extends TypeAdapter<Pet> {
       ..writeByte(4)
       ..write(obj.weight)
       ..writeByte(5)
-      ..write(obj.photoPath);
+      ..write(obj.photoPath)
+      ..writeByte(6)
+      ..write(obj.feedingTimeMinutes)
+      ..writeByte(7)
+      ..write(obj.vaccinationDate)
+      ..writeByte(8)
+      ..write(obj.groomingIntervalDays)
+      ..writeByte(9)
+      ..write(obj.doctorCheckDate);
   }
 
   @override
