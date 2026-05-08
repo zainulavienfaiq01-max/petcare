@@ -1,12 +1,10 @@
 name: petcare_apk
 description: "A new Flutter project."
-
-publish_to: 'none' 
+publish_to: 'none'
 version: 1.0.0+1
 
 environment:
-  sdk: ^3.11.5
-
+  sdk: ">=3.0.0 <4.0.0"
 
 dependencies:
   flutter:
@@ -36,24 +34,7 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
-  assets:
-    - assets/images/
-    - assets/images/login_bg.png
-    - assets/images/signup_bg.png
-    - assets/images/splash_logo.png
-    - assets/icons/
 
-  fonts:
-    - family: Poppins
-      fonts:
-        - asset: assets/fonts/Poppins-Regular.ttf
-        - asset: assets/fonts/Poppins-Medium.ttf
-          weight: 500
-        - asset: assets/fonts/Poppins-SemiBold.ttf
-          weight: 600
-        - asset: assets/fonts/Poppins-Bold.ttf
-          weight: 700
- 
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
