@@ -5,7 +5,7 @@ import '../providers/theme_provider.dart';
 import '../providers/auth_provider.dart';
 import '../utils/colors.dart';
 import '../utils/constants.dart';
-import 'login_screen.dart';
+import 'splash_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -99,7 +99,7 @@ class ProfileScreen extends StatelessWidget {
               await authProvider.logout();
               if (context.mounted) {
                 Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(builder: (_) => const LoginScreen()),
+                  MaterialPageRoute(builder: (_) => const SplashScreen()),
                   (route) => false,
                 );
               }
