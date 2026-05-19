@@ -219,7 +219,7 @@ class _AddEditPetScreenState extends State<AddEditPetScreen> {
               const SizedBox(height: 16),
               
               DropdownButtonFormField<String>(
-                value: _selectedType,
+                initialValue: _selectedType,
                 decoration: const InputDecoration(
                   labelText: 'Pet Type',
                   prefixIcon: Icon(Icons.category_outlined),
@@ -282,7 +282,7 @@ class _AddEditPetScreenState extends State<AddEditPetScreen> {
                   ),
                   value: _enableAutoSchedule,
                   onChanged: (v) => setState(() => _enableAutoSchedule = v),
-                  activeColor: AppColors.accentPurple,
+                  activeThumbColor: AppColors.accentPurple,
                   contentPadding: EdgeInsets.zero,
                 ),
 

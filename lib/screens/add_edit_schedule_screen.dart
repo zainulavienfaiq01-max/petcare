@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import '../providers/schedule_provider.dart';
 import '../providers/pet_provider.dart';
 import '../models/schedule.dart';
-import '../utils/colors.dart';
 import '../utils/constants.dart';
 import '../widgets/custom_text_field.dart';
 
@@ -102,7 +100,7 @@ class _AddEditScheduleScreenState extends State<AddEditScheduleScreen> {
               child: Column(
                 children: [
                   DropdownButtonFormField<String>(
-                    value: _selectedPetId,
+                    initialValue: _selectedPetId,
                     decoration: const InputDecoration(
                       labelText: 'Select Pet',
                       prefixIcon: Icon(Icons.pets),
@@ -116,7 +114,7 @@ class _AddEditScheduleScreenState extends State<AddEditScheduleScreen> {
                   const SizedBox(height: 16),
                   
                   DropdownButtonFormField<String>(
-                    value: _selectedType,
+                    initialValue: _selectedType,
                     decoration: const InputDecoration(
                       labelText: 'Schedule Type',
                       prefixIcon: Icon(Icons.category_outlined),

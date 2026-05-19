@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import '../providers/health_provider.dart';
 import '../providers/pet_provider.dart';
 import '../models/health_record.dart';
-import '../utils/colors.dart';
 import '../widgets/custom_text_field.dart';
 
 class AddEditHealthScreen extends StatefulWidget {
@@ -116,7 +114,7 @@ class _AddEditHealthScreenState extends State<AddEditHealthScreen> {
               child: Column(
                 children: [
                   DropdownButtonFormField<String>(
-                    value: _selectedPetId,
+                    initialValue: _selectedPetId,
                     decoration: const InputDecoration(
                       labelText: 'Select Pet',
                       prefixIcon: Icon(Icons.pets),

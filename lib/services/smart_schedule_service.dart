@@ -59,8 +59,8 @@ class SmartScheduleService {
           type: 'Makan',
           dateTime: dateTime,
           notes: isYoung
-              ? 'Feeding ${i + 1}/$timesPerDay (young pet - needs more frequent feeding)'
-              : 'Feeding ${i + 1}/$timesPerDay',
+              ? 'Pemberian makan ${i + 1}/$timesPerDay (hewan muda - butuh makan lebih sering)'
+              : 'Pemberian makan ${i + 1}/$timesPerDay',
         ));
       }
     }
@@ -103,7 +103,7 @@ class SmartScheduleService {
         petId: pet.id,
         type: 'Grooming',
         dateTime: groomDate,
-        notes: 'Regular grooming session (every $intervalDays days)',
+        notes: 'Sesi grooming rutin (setiap $intervalDays hari)',
       ));
       nextGrooming = nextGrooming.add(Duration(days: intervalDays));
     }
@@ -124,7 +124,7 @@ class SmartScheduleService {
         petId: pet.id,
         type: 'Vaksin',
         dateTime: pet.vaccinationDate!,
-        notes: 'Scheduled vaccination',
+        notes: 'Vaksinasi terjadwal',
       ));
       return schedules;
     }
@@ -138,7 +138,7 @@ class SmartScheduleService {
           petId: pet.id,
           type: 'Vaksin',
           dateTime: DateTime(vaccDate.year, vaccDate.month, vaccDate.day, 10, 0),
-          notes: 'Initial vaccine series (dose ${i + 1}/3)',
+          notes: 'Seri vaksin awal (dosis ${i + 1}/3)',
         ));
       }
     } else {
@@ -149,7 +149,7 @@ class SmartScheduleService {
         petId: pet.id,
         type: 'Vaksin',
         dateTime: DateTime(boosterDate.year, boosterDate.month, boosterDate.day, 10, 0),
-        notes: 'Annual vaccination booster',
+        notes: 'Vaksinasi booster tahunan',
       ));
     }
 
@@ -166,7 +166,7 @@ class SmartScheduleService {
         petId: pet.id,
         type: 'Kontrol Dokter',
         dateTime: pet.doctorCheckDate!,
-        notes: 'Scheduled vet check-up',
+        notes: 'Pemeriksaan dokter hewan terjadwal',
       ));
       return schedules;
     }
@@ -178,7 +178,7 @@ class SmartScheduleService {
       petId: pet.id,
       type: 'Kontrol Dokter',
       dateTime: DateTime(checkDate.year, checkDate.month, checkDate.day, 9, 0),
-      notes: 'Routine veterinary check-up',
+      notes: 'Pemeriksaan rutin dokter hewan',
     ));
 
     return schedules;

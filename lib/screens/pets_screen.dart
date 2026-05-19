@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../providers/pet_provider.dart';
-import '../models/pet.dart';
 import '../utils/colors.dart';
 import '../utils/constants.dart';
 import 'add_edit_pet_screen.dart';

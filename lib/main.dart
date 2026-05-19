@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -10,12 +11,29 @@ import 'providers/pet_provider.dart';
 import 'providers/schedule_provider.dart';
 import 'providers/health_provider.dart';
 import 'providers/theme_provider.dart';
+import 'services/notification_service.dart';
 import 'utils/theme.dart';
 import 'utils/constants.dart';
 import 'screens/splash_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Lock orientation to portrait for mobile
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
+
+  // Set system UI overlay style
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness: Brightness.dark,
+      systemNavigationBarColor: Colors.transparent,
+      systemNavigationBarIconBrightness: Brightness.dark,
+    ),
+  );
 
   // Initialize Hive for Flutter
   await Hive.initFlutter();
@@ -29,6 +47,9 @@ void main() async {
   await Hive.openBox<Pet>(AppConstants.petBox);
   await Hive.openBox<Schedule>(AppConstants.scheduleBox);
   await Hive.openBox<HealthRecord>(AppConstants.healthBox);
+
+  // Initialize notification service for mobile
+  await NotificationService().init();
 
   runApp(const PetCareApp());
 }

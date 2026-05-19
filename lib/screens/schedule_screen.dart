@@ -5,7 +5,6 @@ import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '../providers/schedule_provider.dart';
 import '../providers/pet_provider.dart';
-import '../models/schedule.dart';
 import '../utils/colors.dart';
 import '../utils/constants.dart';
 import 'add_edit_schedule_screen.dart';

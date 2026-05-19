@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:google_fonts/google_fonts.dart';
-import '../providers/theme_provider.dart';
-import '../providers/auth_provider.dart';
 import '../utils/colors.dart';
 import 'dashboard_screen.dart';
 import 'pets_screen.dart';
