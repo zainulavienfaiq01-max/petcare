@@ -4,17 +4,22 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import '../providers/pet_provider.dart';
 import '../providers/schedule_provider.dart';
+import '../providers/locale_provider.dart';
 import '../utils/colors.dart';
 import '../utils/constants.dart';
 import '../widgets/stat_card.dart';
 import 'consultation_screen.dart';
 import 'news_screen.dart';
+import 'pet_library_screen.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final locale = context.watch<LocaleProvider>();
+    final t = locale.translate;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(AppConstants.appName, style: GoogleFonts.poppins()),
@@ -32,7 +37,7 @@ class DashboardScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Welcome Back!',
+                  t('welcome_back'),
                   style: GoogleFonts.poppins(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
@@ -96,14 +101,14 @@ class DashboardScreen extends StatelessWidget {
                 ),
                 
                 const SizedBox(height: 24),
-                Text('Quick Actions', style: Theme.of(context).textTheme.titleLarge),
+                Text(t('quick_actions'), style: Theme.of(context).textTheme.titleLarge),
                 const SizedBox(height: 12),
                 Row(
                   children: [
                     Expanded(
                       child: _buildQuickActionCard(
                         context,
-                        title: 'Consultation',
+                        title: t('consultation'),
                         icon: Icons.health_and_safety,
                         color: Colors.blue,
                         onTap: () => Navigator.push(
@@ -112,11 +117,11 @@ class DashboardScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(width: 12),
+                    const SizedBox(width: 10),
                     Expanded(
                       child: _buildQuickActionCard(
                         context,
-                        title: 'Pet News',
+                        title: t('pet_news'),
                         icon: Icons.article,
                         color: Colors.orange,
                         onTap: () => Navigator.push(
@@ -125,11 +130,24 @@ class DashboardScreen extends StatelessWidget {
                         ),
                       ),
                     ),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: _buildQuickActionCard(
+                        context,
+                        title: t('pet_library'),
+                        icon: Icons.auto_stories,
+                        color: AppColors.accentPurple,
+                        onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const PetLibraryScreen()),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
 
                 const SizedBox(height: 24),
-                Text('Statistics', style: Theme.of(context).textTheme.titleLarge),
+                Text(t('statistics'), style: Theme.of(context).textTheme.titleLarge),
                 const SizedBox(height: 12),
                 GridView.count(
                   crossAxisCount: 2,

@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../providers/locale_provider.dart';
 import '../utils/colors.dart';
 import 'dashboard_screen.dart';
 import 'pets_screen.dart';
 import 'schedule_screen.dart';
-import 'health_screen.dart';
+import 'pet_library_screen.dart';
 import 'profile_screen.dart';
 
+/// Main shell with bottom navigation bar.
+/// Now includes the Pet Library tab (index 3).
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
 
@@ -13,7 +17,8 @@ class MainScreen extends StatefulWidget {
   State<MainScreen> createState() => _MainScreenState();
 }
 
-class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateMixin {
+class _MainScreenState extends State<MainScreen>
+    with SingleTickerProviderStateMixin {
   int _currentIndex = 0;
   late AnimationController _controller;
 
@@ -21,14 +26,17 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
     DashboardScreen(),
     PetsScreen(),
     ScheduleScreen(),
-    HealthScreen(),
+    PetLibraryScreen(),
     ProfileScreen(),
   ];
 
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(duration: const Duration(milliseconds: 300), vsync: this);
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 300),
+      vsync: this,
+    );
   }
 
   @override
@@ -39,36 +47,80 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
 
   @override
   Widget build(BuildContext context) {
+    final locale = context.watch<LocaleProvider>();
+    final t = locale.translate;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
-      body: _pages[_currentIndex],
+      body: AnimatedSwitcher(
+        duration: const Duration(milliseconds: 220),
+        transitionBuilder: (child, animation) => FadeTransition(
+          opacity: animation,
+          child: child,
+        ),
+        child: KeyedSubtree(
+          key: ValueKey(_currentIndex),
+          child: _pages[_currentIndex],
+        ),
+      ),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
-          color: Theme.of(context).brightness == Brightness.light 
-              ? Colors.white 
-              : AppColors.surfaceDark,
-          borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+          color: isDark ? AppColors.surfaceDark : Colors.white,
+          borderRadius:
+              const BorderRadius.vertical(top: Radius.circular(24)),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(alpha: 0.05),
+              color: Colors.black.withValues(alpha: 0.08),
               blurRadius: 20,
               offset: const Offset(0, -4),
             ),
           ],
         ),
         child: ClipRRect(
-          borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+          borderRadius:
+              const BorderRadius.vertical(top: Radius.circular(24)),
           child: BottomNavigationBar(
             currentIndex: _currentIndex,
             onTap: (index) {
               setState(() => _currentIndex = index);
               _controller.forward(from: 0);
             },
-            items: const [
-              BottomNavigationBarItem(icon: Icon(Icons.dashboard_outlined), label: 'Dashboard'),
-              BottomNavigationBarItem(icon: Icon(Icons.pets_outlined), label: 'Pets'),
-              BottomNavigationBarItem(icon: Icon(Icons.calendar_today_outlined), label: 'Schedule'),
-              BottomNavigationBarItem(icon: Icon(Icons.favorite_outlined), label: 'Health'),
-              BottomNavigationBarItem(icon: Icon(Icons.person_outline), label: 'Profile'),
+            type: BottomNavigationBarType.fixed,
+            backgroundColor: Colors.transparent,
+            selectedItemColor: AppColors.primaryPurple,
+            unselectedItemColor: Colors.grey[400],
+            selectedLabelStyle: const TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 11,
+            ),
+            unselectedLabelStyle: const TextStyle(fontSize: 10),
+            elevation: 0,
+            items: [
+              BottomNavigationBarItem(
+                icon: const Icon(Icons.dashboard_outlined),
+                activeIcon: const Icon(Icons.dashboard),
+                label: t('nav_home'),
+              ),
+              BottomNavigationBarItem(
+                icon: const Icon(Icons.pets_outlined),
+                activeIcon: const Icon(Icons.pets),
+                label: t('nav_pets'),
+              ),
+              BottomNavigationBarItem(
+                icon: const Icon(Icons.calendar_today_outlined),
+                activeIcon: const Icon(Icons.calendar_today),
+                label: t('nav_schedule'),
+              ),
+              BottomNavigationBarItem(
+                icon: const Icon(Icons.auto_stories_outlined),
+                activeIcon: const Icon(Icons.auto_stories),
+                label: t('pet_library'),
+              ),
+              BottomNavigationBarItem(
+                icon: const Icon(Icons.person_outline),
+                activeIcon: const Icon(Icons.person),
+                label: t('nav_profile'),
+              ),
             ],
           ),
         ),

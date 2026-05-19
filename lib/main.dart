@@ -11,6 +11,8 @@ import 'providers/pet_provider.dart';
 import 'providers/schedule_provider.dart';
 import 'providers/health_provider.dart';
 import 'providers/theme_provider.dart';
+import 'providers/library_provider.dart';
+import 'providers/locale_provider.dart';
 import 'services/notification_service.dart';
 import 'utils/theme.dart';
 import 'utils/constants.dart';
@@ -51,11 +53,29 @@ void main() async {
   // Initialize notification service for mobile
   await NotificationService().init();
 
-  runApp(const PetCareApp());
+  // Load locale preference before first frame
+  final localeProvider = LocaleProvider();
+  await localeProvider.loadLocale();
+
+  // Load library favorites before first frame
+  final libraryProvider = LibraryProvider();
+  await libraryProvider.loadFavorites();
+
+  runApp(PetCareApp(
+    localeProvider: localeProvider,
+    libraryProvider: libraryProvider,
+  ));
 }
 
 class PetCareApp extends StatelessWidget {
-  const PetCareApp({super.key});
+  final LocaleProvider localeProvider;
+  final LibraryProvider libraryProvider;
+
+  const PetCareApp({
+    super.key,
+    required this.localeProvider,
+    required this.libraryProvider,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -66,15 +86,21 @@ class PetCareApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => PetProvider()),
         ChangeNotifierProvider(create: (_) => ScheduleProvider()),
         ChangeNotifierProvider(create: (_) => HealthProvider()),
+        // New providers
+        ChangeNotifierProvider.value(value: localeProvider),
+        ChangeNotifierProvider.value(value: libraryProvider),
       ],
-      child: Consumer<ThemeProvider>(
-        builder: (context, themeProvider, child) {
+      child: Consumer2<ThemeProvider, LocaleProvider>(
+        builder: (context, themeProvider, locale, child) {
           return MaterialApp(
             title: AppConstants.appName,
             debugShowCheckedModeBanner: false,
             theme: AppTheme.lightTheme,
             darkTheme: AppTheme.darkTheme,
-            themeMode: themeProvider.isDarkMode ? ThemeMode.dark : ThemeMode.light,
+            themeMode:
+                themeProvider.isDarkMode ? ThemeMode.dark : ThemeMode.light,
+            // Locale support
+            locale: locale.locale,
             home: const SplashScreen(),
           );
         },
