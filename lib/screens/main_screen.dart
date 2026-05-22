@@ -5,11 +5,11 @@ import '../utils/colors.dart';
 import 'dashboard_screen.dart';
 import 'pets_screen.dart';
 import 'schedule_screen.dart';
-import 'pet_library_screen.dart';
 import 'profile_screen.dart';
 
-/// Main shell with bottom navigation bar.
-/// Now includes the Pet Library tab (index 3).
+/// Main app shell with bottom navigation bar.
+/// 4 tabs: Home, Pets, Schedule, Profile.
+/// Library is accessible only via Quick Actions on the dashboard.
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
 
@@ -26,7 +26,6 @@ class _MainScreenState extends State<MainScreen>
     DashboardScreen(),
     PetsScreen(),
     ScheduleScreen(),
-    PetLibraryScreen(),
     ProfileScreen(),
   ];
 
@@ -53,7 +52,7 @@ class _MainScreenState extends State<MainScreen>
 
     return Scaffold(
       body: AnimatedSwitcher(
-        duration: const Duration(milliseconds: 220),
+        duration: const Duration(milliseconds: 250),
         transitionBuilder: (child, animation) => FadeTransition(
           opacity: animation,
           child: child,
@@ -66,8 +65,7 @@ class _MainScreenState extends State<MainScreen>
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
           color: isDark ? AppColors.surfaceDark : Colors.white,
-          borderRadius:
-              const BorderRadius.vertical(top: Radius.circular(24)),
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
           boxShadow: [
             BoxShadow(
               color: Colors.black.withValues(alpha: 0.08),
@@ -77,8 +75,7 @@ class _MainScreenState extends State<MainScreen>
           ],
         ),
         child: ClipRRect(
-          borderRadius:
-              const BorderRadius.vertical(top: Radius.circular(24)),
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
           child: BottomNavigationBar(
             currentIndex: _currentIndex,
             onTap: (index) {
@@ -88,7 +85,8 @@ class _MainScreenState extends State<MainScreen>
             type: BottomNavigationBarType.fixed,
             backgroundColor: Colors.transparent,
             selectedItemColor: AppColors.primaryPurple,
-            unselectedItemColor: Colors.grey[400],
+            unselectedItemColor:
+                isDark ? Colors.grey[600] : Colors.grey[400],
             selectedLabelStyle: const TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 11,
@@ -110,11 +108,6 @@ class _MainScreenState extends State<MainScreen>
                 icon: const Icon(Icons.calendar_today_outlined),
                 activeIcon: const Icon(Icons.calendar_today),
                 label: t('nav_schedule'),
-              ),
-              BottomNavigationBarItem(
-                icon: const Icon(Icons.auto_stories_outlined),
-                activeIcon: const Icon(Icons.auto_stories),
-                label: t('pet_library'),
               ),
               BottomNavigationBarItem(
                 icon: const Icon(Icons.person_outline),

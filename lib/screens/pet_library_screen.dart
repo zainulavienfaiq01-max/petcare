@@ -66,9 +66,10 @@ class _PetLibraryScreenState extends State<PetLibraryScreen>
   Widget build(BuildContext context) {
     final locale = context.watch<LocaleProvider>();
     final t = locale.translate;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
-      backgroundColor: Colors.grey[50],
+      backgroundColor: isDark ? AppColors.backgroundDark : Colors.grey[50],
       body: CustomScrollView(
         slivers: [
           // ── Gradient SliverAppBar ──────────────────────────────────────────
