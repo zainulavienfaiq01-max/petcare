@@ -190,7 +190,7 @@ class ProfileScreen extends StatelessWidget {
                             trailing: Switch(
                               value: themeProvider.isDarkMode,
                               onChanged: (_) => themeProvider.toggleTheme(),
-                              activeColor: AppColors.primaryPurple,
+                              activeThumbColor: AppColors.primaryPurple,
                             ),
                           ),
                           _divider(isDark),
@@ -203,7 +203,7 @@ class ProfileScreen extends StatelessWidget {
                             trailing: Switch(
                               value: audioProvider.isBgmEnabled,
                               onChanged: (_) => audioProvider.toggleBgm(),
-                              activeColor: AppColors.primaryPurple,
+                              activeThumbColor: AppColors.primaryPurple,
                             ),
                           ),
                           _divider(isDark),

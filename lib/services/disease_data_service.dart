@@ -1,6 +1,7 @@
 /// Comprehensive pet disease database for cats and dogs.
 /// Each disease includes detailed medical information to help
 /// pet owners identify and understand potential health issues.
+library;
 
 class DiseaseInfo {
   final String name;

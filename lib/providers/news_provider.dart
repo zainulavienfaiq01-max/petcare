@@ -94,10 +94,10 @@ class NewsProvider with ChangeNotifier {
              // Analyze title to guess category
              String cat = 'Trending News';
              final lowerTitle = titleText.toLowerCase();
-             if(lowerTitle.contains('dog') || lowerTitle.contains('cat') || lowerTitle.contains('pet')) cat = 'Pet Care';
-             else if(lowerTitle.contains('vet') || lowerTitle.contains('clinic')) cat = 'Veterinary';
-             else if(lowerTitle.contains('disease') || lowerTitle.contains('virus') || lowerTitle.contains('health')) cat = 'Animal Health';
-             else if(lowerTitle.contains('wild') || lowerTitle.contains('lion') || lowerTitle.contains('elephant')) cat = 'Wildlife';
+             if(lowerTitle.contains('dog') || lowerTitle.contains('cat') || lowerTitle.contains('pet')) { cat = 'Pet Care'; }
+             else if(lowerTitle.contains('vet') || lowerTitle.contains('clinic')) { cat = 'Veterinary'; }
+             else if(lowerTitle.contains('disease') || lowerTitle.contains('virus') || lowerTitle.contains('health')) { cat = 'Animal Health'; }
+             else if(lowerTitle.contains('wild') || lowerTitle.contains('lion') || lowerTitle.contains('elephant')) { cat = 'Wildlife'; }
              
              // Filter out items without an image if possible, or use placeholder
              if (titleText.isNotEmpty) {
