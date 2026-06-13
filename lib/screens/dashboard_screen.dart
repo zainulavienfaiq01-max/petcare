@@ -12,7 +12,7 @@ import '../utils/colors.dart';
 import '../utils/constants.dart';
 import '../widgets/stat_card.dart';
 import 'consultation_screen.dart';
-import 'pet_library_screen.dart';
+import 'library_hub_screen.dart';
 import 'pet_tips_screen.dart';
 import 'notification_screen.dart';
 import 'schedule_screen.dart';
@@ -375,7 +375,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                                   context,
                                   MaterialPageRoute(
                                       builder: (_) =>
-                                          const PetLibraryScreen()),
+                                          const LibraryHubScreen()),
                                 );
                               },
                             ),

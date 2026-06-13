@@ -14,6 +14,7 @@ import 'providers/theme_provider.dart';
 import 'providers/library_provider.dart';
 import 'providers/locale_provider.dart';
 import 'providers/audio_provider.dart';
+import 'providers/news_provider.dart';
 import 'services/notification_service.dart';
 import 'utils/theme.dart';
 import 'utils/constants.dart';
@@ -91,6 +92,7 @@ class PetCareApp extends StatelessWidget {
         ChangeNotifierProvider.value(value: localeProvider),
         ChangeNotifierProvider.value(value: libraryProvider),
         ChangeNotifierProvider(create: (_) => AudioProvider(), lazy: false),
+        ChangeNotifierProvider(create: (_) => NewsProvider()),
       ],
       child: Consumer2<ThemeProvider, LocaleProvider>(
         builder: (context, themeProvider, locale, child) {

@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import '../providers/news_provider.dart';
+import '../models/news_item.dart';
 import '../utils/colors.dart';
 import 'news_detail_screen.dart';
 
@@ -8,11 +12,13 @@ class NewsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
-      backgroundColor: Colors.grey[50],
+      backgroundColor: isDark ? AppColors.backgroundDark : Colors.grey[50],
       appBar: AppBar(
         title: Text(
-          'Trending News',
+          'Latest News',
           style: GoogleFonts.poppins(
             color: Colors.white,
             fontWeight: FontWeight.bold,
@@ -22,169 +28,224 @@ class NewsScreen extends StatelessWidget {
         elevation: 0,
         centerTitle: true,
       ),
-      body: ListView.builder(
-        padding: const EdgeInsets.all(16),
-        itemCount: 5,
-        itemBuilder: (context, index) {
-          return _buildNewsCard(context, index);
+      body: Consumer<NewsProvider>(
+        builder: (context, newsProvider, child) {
+          return Column(
+            children: [
+              // Categories horizontal list
+              Container(
+                height: 60,
+                padding: const EdgeInsets.symmetric(vertical: 12),
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  itemCount: newsProvider.categories.length,
+                  itemBuilder: (context, index) {
+                    final category = newsProvider.categories[index];
+                    final isSelected = newsProvider.selectedCategory == category;
+
+                    return GestureDetector(
+                      onTap: () => newsProvider.setCategory(category),
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 200),
+                        margin: const EdgeInsets.only(right: 12),
+                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                        decoration: BoxDecoration(
+                          color: isSelected ? AppColors.primaryPurple : (isDark ? AppColors.cardDark : Colors.white),
+                          borderRadius: BorderRadius.circular(20),
+                          border: Border.all(
+                            color: isSelected ? AppColors.primaryPurple : Colors.grey.withValues(alpha: 0.3),
+                          ),
+                          boxShadow: isSelected ? [
+                            BoxShadow(
+                              color: AppColors.primaryPurple.withValues(alpha: 0.3),
+                              blurRadius: 8,
+                              offset: const Offset(0, 4),
+                            ),
+                          ] : null,
+                        ),
+                        child: Center(
+                          child: Text(
+                            category,
+                            style: GoogleFonts.poppins(
+                              color: isSelected ? Colors.white : (isDark ? Colors.white : Colors.grey[800]),
+                              fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
+                              fontSize: 13,
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+              
+              // Error Banner
+              if (newsProvider.error.isNotEmpty)
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  color: Colors.amber.withValues(alpha: 0.2),
+                  width: double.infinity,
+                  child: Text(
+                    newsProvider.error,
+                    style: GoogleFonts.poppins(color: Colors.orange[800], fontSize: 12),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+
+              // News List
+              Expanded(
+                child: newsProvider.isLoading && newsProvider.newsList.isEmpty
+                    ? const Center(child: CircularProgressIndicator(color: AppColors.primaryPurple))
+                    : RefreshIndicator(
+                        color: AppColors.primaryPurple,
+                        onRefresh: () => newsProvider.fetchNews(forceRefresh: true),
+                        child: newsProvider.newsList.isEmpty
+                            ? ListView(
+                                children: [
+                                  SizedBox(height: MediaQuery.of(context).size.height * 0.3),
+                                  Center(
+                                    child: Text(
+                                      'No news found in this category.',
+                                      style: GoogleFonts.poppins(color: Colors.grey),
+                                    ),
+                                  ),
+                                ],
+                              )
+                            : ListView.builder(
+                                padding: const EdgeInsets.all(16),
+                                itemCount: newsProvider.newsList.length,
+                                itemBuilder: (context, index) {
+                                  final news = newsProvider.newsList[index];
+                                  return _buildNewsCard(context, news, isDark);
+                                },
+                              ),
+                      ),
+              ),
+            ],
+          );
         },
       ),
     );
   }
 
-  Widget _buildNewsCard(BuildContext context, int index) {
-    final List<Map<String, String>> dummyNews = [
-      {
-        'title': 'Anjing Terlantar Diselamatkan di Jakarta, Kini Butuh Adopsi',
-        'category': 'Adoption',
-        'date': '18 May 2026',
-        'description': 'Seekor anjing ditemukan terlantar di kawasan Jakarta Selatan dan kini dirawat di shelter...',
-        'image': 'https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&w=500&q=60',
-      },
-      {
-        'title': 'Vaksin Rabies Gratis di Bandung Diserbu Ribuan Pemilik Hewan',
-        'category': 'Health',
-        'date': '17 May 2026',
-        'description': 'Pemerintah kota Bandung mengadakan vaksinasi rabies gratis untuk anjing dan kucing...',
-        'image': 'https://images.unsplash.com/photo-1576201836106-db1758fd1c97?auto=format&fit=crop&w=500&q=60',
-      },
-      {
-        'title': 'Pameran Kucing Internasional Hadir di ICE BSD Minggu Ini',
-        'category': 'Event',
-        'date': '15 May 2026',
-        'description': 'Bagi para pecinta kucing, bersiaplah untuk pameran terbesar tahun ini yang akan digelar...',
-        'image': 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=500&q=60',
-      },
-      {
-        'title': 'Tips Menjaga Nutrisi Kucing Persia Agar Bulu Tetap Lebat',
-        'category': 'Nutrition',
-        'date': '12 May 2026',
-        'description': 'Kucing persia membutuhkan perawatan khusus terutama pada asupan makanannya...',
-        'image': 'https://images.unsplash.com/photo-1533738363-b7f9aef128ce?auto=format&fit=crop&w=500&q=60',
-      },
-      {
-        'title': 'Komunitas Reptil Surabaya Berikan Edukasi Cara Merawat Ular',
-        'category': 'Education',
-        'date': '10 May 2026',
-        'description': 'Semakin banyaknya pecinta reptil membuat komunitas ini bergerak untuk mengedukasi...',
-        'image': 'https://images.unsplash.com/photo-1504450758481-7338eba7524a?auto=format&fit=crop&w=500&q=60',
-      },
-    ];
-
-    final news = dummyNews[index];
-
-    return Container(
-      margin: const EdgeInsets.only(bottom: 16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      clipBehavior: Clip.antiAlias,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Image.network(
-            news['image']!,
-            height: 180,
-            width: double.infinity,
-            fit: BoxFit.cover,
-            errorBuilder: (context, error, stackTrace) {
-              return Container(
-                height: 180,
-                color: Colors.grey[300],
-                child: const Icon(Icons.image_not_supported, size: 50, color: Colors.grey),
+  Widget _buildNewsCard(BuildContext context, NewsItem news, bool isDark) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          PageRouteBuilder(
+            transitionDuration: const Duration(milliseconds: 300),
+            pageBuilder: (_, __, ___) => NewsDetailScreen(news: news),
+            transitionsBuilder: (_, animation, __, child) {
+              return SlideTransition(
+                position: Tween<Offset>(
+                  begin: const Offset(1.0, 0.0),
+                  end: Offset.zero,
+                ).animate(CurvedAnimation(
+                  parent: animation,
+                  curve: Curves.easeOutCubic,
+                )),
+                child: child,
               );
             },
           ),
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                      decoration: BoxDecoration(
-                        color: AppColors.primaryPurple.withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Text(
-                        news['category']!,
-                        style: GoogleFonts.poppins(
-                          fontSize: 10,
-                          fontWeight: FontWeight.w600,
-                          color: AppColors.primaryPurple,
-                        ),
-                      ),
-                    ),
-                    Text(
-                      news['date']!,
-                      style: GoogleFonts.poppins(
-                        fontSize: 12,
-                        color: Colors.grey[500],
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 12),
-                Text(
-                  news['title']!,
-                  style: GoogleFonts.poppins(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.textPrimary,
-                  ),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  news['description']!,
-                  style: GoogleFonts.poppins(
-                    fontSize: 12,
-                    color: Colors.grey[600],
-                  ),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                const SizedBox(height: 16),
-                SizedBox(
-                  width: double.infinity,
-                  child: OutlinedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => NewsDetailScreen(news: news),
-                        ),
-                      );
-                    },
-                    style: OutlinedButton.styleFrom(
-                      foregroundColor: AppColors.primaryPurple,
-                      side: const BorderSide(color: AppColors.primaryPurple),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                    ),
-                    child: Text(
-                      'Read More',
-                      style: GoogleFonts.poppins(fontWeight: FontWeight.w600),
-                    ),
-                  ),
-                ),
-              ],
+        );
+      },
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 16),
+        decoration: BoxDecoration(
+          color: isDark ? AppColors.cardDark : Colors.white,
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.05),
+              blurRadius: 10,
+              offset: const Offset(0, 4),
             ),
-          ),
-        ],
+          ],
+        ),
+        clipBehavior: Clip.antiAlias,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Hero(
+              tag: news.imageUrl,
+              child: CachedNetworkImage(
+                imageUrl: news.imageUrl,
+                height: 180,
+                width: double.infinity,
+                fit: BoxFit.cover,
+                placeholder: (context, url) => Container(
+                  height: 180,
+                  color: isDark ? Colors.grey[800] : Colors.grey[300],
+                  child: const Center(child: CircularProgressIndicator(strokeWidth: 2)),
+                ),
+                errorWidget: (context, url, error) => Container(
+                  height: 180,
+                  color: isDark ? Colors.grey[800] : Colors.grey[300],
+                  child: const Icon(Icons.broken_image, size: 50, color: Colors.grey),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                        decoration: BoxDecoration(
+                          color: AppColors.primaryPurple.withValues(alpha: 0.1),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Text(
+                          news.category,
+                          style: GoogleFonts.poppins(
+                            fontSize: 10,
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.primaryPurple,
+                          ),
+                        ),
+                      ),
+                      Text(
+                        news.date,
+                        style: GoogleFonts.poppins(
+                          fontSize: 12,
+                          color: Colors.grey[500],
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+                  Text(
+                    news.title,
+                    style: GoogleFonts.poppins(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimary,
+                    ),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    news.description,
+                    style: GoogleFonts.poppins(
+                      fontSize: 12,
+                      color: isDark ? AppColors.textSecondaryDark : Colors.grey[600],
+                    ),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

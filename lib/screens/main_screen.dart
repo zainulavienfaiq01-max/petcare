@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/locale_provider.dart';
+import '../services/permission_service.dart';
 import '../utils/colors.dart';
 import 'dashboard_screen.dart';
 import 'pets_screen.dart';
@@ -36,6 +37,11 @@ class _MainScreenState extends State<MainScreen>
       duration: const Duration(milliseconds: 300),
       vsync: this,
     );
+    
+    // Request permissions after a short delay so the UI can load first
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      PermissionService().requestInitialPermissions();
+    });
   }
 
   @override

@@ -7,10 +7,30 @@ import '../providers/locale_provider.dart';
 import '../providers/audio_provider.dart';
 import '../utils/colors.dart';
 import '../utils/constants.dart';
-import 'splash_screen.dart';
 
 /// Redesigned Profile screen with gradient header, dark mode support,
 /// language settings, and animated settings tiles.
+
+const List<Map<String, String>> _languageOptions = [
+  {'code': 'en', 'name': 'English', 'flag': '🇺🇸'},
+  {'code': 'id', 'name': 'Indonesia', 'flag': '🇮🇩'},
+  {'code': 'es', 'name': 'Español', 'flag': '🇪🇸'},
+  {'code': 'fr', 'name': 'Français', 'flag': '🇫🇷'},
+  {'code': 'de', 'name': 'Deutsch', 'flag': '🇩🇪'},
+  {'code': 'it', 'name': 'Italiano', 'flag': '🇮🇹'},
+  {'code': 'pt', 'name': 'Português', 'flag': '🇵🇹'},
+  {'code': 'ru', 'name': 'Русский', 'flag': '🇷🇺'},
+  {'code': 'ja', 'name': '日本語', 'flag': '🇯🇵'},
+  {'code': 'ko', 'name': '한국어', 'flag': '🇰🇷'},
+  {'code': 'zh', 'name': '中文', 'flag': '🇨🇳'},
+  {'code': 'ar', 'name': 'العربية', 'flag': '🇸🇦'},
+  {'code': 'hi', 'name': 'हिन्दी', 'flag': '🇮🇳'},
+  {'code': 'tr', 'name': 'Türkçe', 'flag': '🇹🇷'},
+  {'code': 'nl', 'name': 'Nederlands', 'flag': '🇳🇱'},
+  {'code': 'pl', 'name': 'Polski', 'flag': '🇵🇱'},
+  {'code': 'th', 'name': 'ไทย', 'flag': '🇹🇭'},
+];
+
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
@@ -191,8 +211,7 @@ class ProfileScreen extends StatelessWidget {
                             icon: Icons.language,
                             iconColor: Colors.blue,
                             title: t('language_settings'),
-                            subtitle:
-                                locale.isEnglish ? 'English' : 'Indonesia',
+                            subtitle: _languageOptions.firstWhere((l) => l['code'] == locale.currentLanguageCode, orElse: () => _languageOptions.first)['name'],
                             isDark: isDark,
                             trailing: const Icon(Icons.chevron_right,
                                 color: Colors.grey, size: 20),
@@ -218,16 +237,7 @@ class ProfileScreen extends StatelessWidget {
                                 color: Colors.grey, size: 20),
                           ),
                           _divider(isDark),
-                          _SettingsTile(
-                            icon: Icons.shield_outlined,
-                            iconColor: Colors.green,
-                            title: 'Privacy & Security',
-                            subtitle: 'Password & data settings',
-                            isDark: isDark,
-                            trailing: const Icon(Icons.chevron_right,
-                                color: Colors.grey, size: 20),
-                          ),
-                          _divider(isDark),
+                          // Privacy & Security removed
                           _SettingsTile(
                             icon: Icons.help_outline,
                             iconColor: Colors.teal,
@@ -259,23 +269,7 @@ class ProfileScreen extends StatelessWidget {
 
                       const SizedBox(height: 14),
 
-                      // ── Logout ──────────────────────────────────────────
-                      _SettingsGroup(
-                        isDark: isDark,
-                        children: [
-                          _SettingsTile(
-                            icon: Icons.logout,
-                            iconColor: AppColors.error,
-                            title: t('logout'),
-                            titleColor: AppColors.error,
-                            isDark: isDark,
-                            onTap: () => _showLogoutDialog(
-                                context, authProvider, t),
-                          ),
-                        ],
-                      ),
-
-                      const SizedBox(height: 60),
+                      // Logout section removed
                     ],
                   ),
                 ),
@@ -302,113 +296,73 @@ class ProfileScreen extends StatelessWidget {
 
     showModalBottomSheet(
       context: context,
+      isScrollControlled: true,
       backgroundColor: isDark ? AppColors.cardDark : Colors.white,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
       ),
       builder: (ctx) {
-        return Padding(
-          padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 20),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Container(
-                width: 40,
-                height: 4,
-                decoration: BoxDecoration(
-                  color: Colors.grey[400],
-                  borderRadius: BorderRadius.circular(4),
-                ),
+        return DraggableScrollableSheet(
+          expand: false,
+          initialChildSize: 0.6,
+          maxChildSize: 0.9,
+          minChildSize: 0.4,
+          builder: (_, controller) {
+            return Padding(
+              padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 20),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    width: 40,
+                    height: 4,
+                    decoration: BoxDecoration(
+                      color: Colors.grey[400],
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  Text(
+                    t('language_settings'),
+                    style: GoogleFonts.poppins(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: isDark
+                          ? AppColors.textPrimaryDark
+                          : AppColors.textPrimary,
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  Expanded(
+                    child: ListView.separated(
+                      controller: controller,
+                      itemCount: _languageOptions.length,
+                      separatorBuilder: (_, __) => const SizedBox(height: 12),
+                      itemBuilder: (context, index) {
+                        final lang = _languageOptions[index];
+                        return _LanguageOption(
+                          flag: lang['flag']!,
+                          language: lang['name']!,
+                          isSelected: locale.currentLanguageCode == lang['code'],
+                          isDark: isDark,
+                          onTap: () async {
+                            await locale.setLocale(lang['code']!);
+                            if (ctx.mounted) Navigator.pop(ctx);
+                          },
+                        );
+                      },
+                    ),
+                  ),
+                ],
               ),
-              const SizedBox(height: 20),
-              Text(
-                t('language_settings'),
-                style: GoogleFonts.poppins(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: isDark
-                      ? AppColors.textPrimaryDark
-                      : AppColors.textPrimary,
-                ),
-              ),
-              const SizedBox(height: 20),
-              _LanguageOption(
-                flag: '🇺🇸',
-                language: 'English',
-                isSelected: locale.isEnglish,
-                isDark: isDark,
-                onTap: () async {
-                  await locale.setEnglish();
-                  if (ctx.mounted) Navigator.pop(ctx);
-                },
-              ),
-              const SizedBox(height: 12),
-              _LanguageOption(
-                flag: '🇮🇩',
-                language: 'Indonesia',
-                isSelected: locale.isIndonesian,
-                isDark: isDark,
-                onTap: () async {
-                  await locale.setIndonesian();
-                  if (ctx.mounted) Navigator.pop(ctx);
-                },
-              ),
-              const SizedBox(height: 16),
-            ],
-          ),
+            );
+          },
         );
       },
     );
   }
 
-  // ── Logout dialog ────────────────────────────────────────────────────────
-  void _showLogoutDialog(BuildContext context, AuthProvider authProvider,
-      String Function(String) t) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-
-    showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        backgroundColor: isDark ? AppColors.cardDark : Colors.white,
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        title: Text(t('logout'),
-            style: GoogleFonts.poppins(
-              fontWeight: FontWeight.bold,
-              color:
-                  isDark ? AppColors.textPrimaryDark : AppColors.textPrimary,
-            )),
-        content: Text(t('logout_confirm'),
-            style: GoogleFonts.poppins(
-              fontSize: 14,
-              color: isDark
-                  ? AppColors.textSecondaryDark
-                  : AppColors.textSecondary,
-            )),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(ctx),
-            child: Text(t('cancel')),
-          ),
-          TextButton(
-            onPressed: () async {
-              await authProvider.logout();
-              if (context.mounted) {
-                Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(builder: (_) => const SplashScreen()),
-                  (route) => false,
-                );
-              }
-            },
-            child: Text(
-              t('logout'),
-              style: const TextStyle(color: AppColors.error),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+  // Logout dialog removed
 }
 
 // ── Settings Group Card ──────────────────────────────────────────────────────
@@ -442,7 +396,6 @@ class _SettingsTile extends StatelessWidget {
   final IconData icon;
   final Color iconColor;
   final String title;
-  final Color? titleColor;
   final String? subtitle;
   final Widget? trailing;
   final VoidCallback? onTap;
@@ -453,7 +406,6 @@ class _SettingsTile extends StatelessWidget {
     required this.iconColor,
     required this.title,
     required this.isDark,
-    this.titleColor,
     this.subtitle,
     this.trailing,
     this.onTap,
@@ -477,8 +429,7 @@ class _SettingsTile extends StatelessWidget {
         style: GoogleFonts.poppins(
           fontSize: 14,
           fontWeight: FontWeight.w600,
-          color: titleColor ??
-              (isDark ? AppColors.textPrimaryDark : AppColors.textPrimary),
+          color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimary,
         ),
       ),
       subtitle: subtitle != null
