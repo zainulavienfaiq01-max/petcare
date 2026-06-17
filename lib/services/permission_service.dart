@@ -1,3 +1,5 @@
+import 'dart:io' show Platform;
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -19,6 +21,8 @@ class PermissionService {
 
   /// Request notification permission.
   Future<bool> requestNotificationPermission() async {
+    if (kIsWeb) return true;
+    if (Platform.isWindows || Platform.isMacOS || Platform.isLinux) return true;
     final status = await Permission.notification.status;
     if (status.isGranted) return true;
     final result = await Permission.notification.request();
@@ -28,6 +32,8 @@ class PermissionService {
 
   /// Request camera permission.
   Future<bool> requestCameraPermission() async {
+    if (kIsWeb) return true;
+    if (Platform.isWindows || Platform.isMacOS || Platform.isLinux) return true;
     final status = await Permission.camera.status;
     if (status.isGranted) return true;
     final result = await Permission.camera.request();
@@ -37,6 +43,8 @@ class PermissionService {
 
   /// Request media/gallery permission.
   Future<bool> requestMediaPermission() async {
+    if (kIsWeb) return true;
+    if (Platform.isWindows || Platform.isMacOS || Platform.isLinux) return true;
     final status = await Permission.photos.status;
     if (status.isGranted) return true;
     final result = await Permission.photos.request();
@@ -46,6 +54,8 @@ class PermissionService {
 
   /// Request calendar permission.
   Future<bool> requestCalendarPermission() async {
+    if (kIsWeb) return true;
+    if (Platform.isWindows || Platform.isMacOS || Platform.isLinux) return true;
     final status = await Permission.calendarFullAccess.status;
     if (status.isGranted) return true;
     final result = await Permission.calendarFullAccess.request();
@@ -55,6 +65,12 @@ class PermissionService {
 
   /// Check if all essential permissions are granted.
   Future<Map<String, bool>> checkAllPermissions() async {
+    if (kIsWeb) {
+      return { 'notification': true, 'camera': true, 'photos': true, 'calendar': true };
+    }
+    if (Platform.isWindows || Platform.isMacOS || Platform.isLinux) {
+      return { 'notification': true, 'camera': true, 'photos': true, 'calendar': true };
+    }
     return {
       'notification': await Permission.notification.isGranted,
       'camera': await Permission.camera.isGranted,

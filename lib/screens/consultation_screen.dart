@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
@@ -308,7 +309,9 @@ class _ConsultationScreenState extends State<ConsultationScreen> {
                               borderRadius: BorderRadius.circular(12),
                             ),
                             child: mType == 'image'
-                                ? Image.file(File(mPath), fit: BoxFit.cover, height: 150, width: double.infinity)
+                                ? (kIsWeb
+                                    ? Image.network(mPath, fit: BoxFit.cover, height: 150, width: double.infinity)
+                                    : Image.file(File(mPath), fit: BoxFit.cover, height: 150, width: double.infinity))
                                 : Container(
                                     height: 100,
                                     width: double.infinity,
@@ -390,7 +393,9 @@ class _ConsultationScreenState extends State<ConsultationScreen> {
                             borderRadius: BorderRadius.circular(10),
                             color: Colors.grey[200],
                             image: _selectedMediaType == 'image'
-                                ? DecorationImage(image: FileImage(File(_selectedMedia!.path)), fit: BoxFit.cover)
+                                ? (kIsWeb
+                                    ? DecorationImage(image: NetworkImage(_selectedMedia!.path), fit: BoxFit.cover)
+                                    : DecorationImage(image: FileImage(File(_selectedMedia!.path)), fit: BoxFit.cover))
                                 : null,
                           ),
                           child: _selectedMediaType == 'video'

@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../providers/locale_provider.dart';
+import '../providers/audio_provider.dart';
 import '../services/disease_data_service.dart';
 import '../utils/colors.dart';
 import 'disease_detail_screen.dart';
+import 'symptom_checker_screen.dart';
 
 /// Displays a searchable, filterable list of pet diseases.
 class DiseaseListScreen extends StatefulWidget {
@@ -88,6 +90,21 @@ class _DiseaseListScreenState extends State<DiseaseListScreen>
 
     return Scaffold(
       backgroundColor: isDark ? AppColors.backgroundDark : Colors.grey[50],
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          context.read<AudioProvider>().playActionClick();
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (_) => const SymptomCheckerScreen()),
+          );
+        },
+        backgroundColor: AppColors.primaryPurple,
+        icon: const Icon(Icons.check_circle_outline, color: Colors.white),
+        label: Text(
+          'Symptom Checker',
+          style: GoogleFonts.poppins(color: Colors.white, fontWeight: FontWeight.bold),
+        ),
+      ),
       body: CustomScrollView(
         slivers: [
           // ── App Bar ──

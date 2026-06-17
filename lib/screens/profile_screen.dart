@@ -7,6 +7,7 @@ import '../providers/locale_provider.dart';
 import '../providers/audio_provider.dart';
 import '../utils/colors.dart';
 import '../utils/constants.dart';
+import 'emergency_contacts_screen.dart';
 
 /// Redesigned Profile screen with gradient header, dark mode support,
 /// language settings, and animated settings tiles.
@@ -235,6 +236,20 @@ class ProfileScreen extends StatelessWidget {
                             isDark: isDark,
                             trailing: const Icon(Icons.chevron_right,
                                 color: Colors.grey, size: 20),
+                          ),
+                          _divider(isDark),
+                          _SettingsTile(
+                            icon: Icons.contact_emergency,
+                            iconColor: AppColors.error,
+                            title: 'Emergency Contacts',
+                            subtitle: 'Important numbers for pet emergencies',
+                            isDark: isDark,
+                            trailing: const Icon(Icons.chevron_right,
+                                color: Colors.grey, size: 20),
+                            onTap: () {
+                              context.read<AudioProvider>().playActionClick();
+                              Navigator.push(context, MaterialPageRoute(builder: (_) => const EmergencyContactsScreen()));
+                            },
                           ),
                           _divider(isDark),
                           // Privacy & Security removed
