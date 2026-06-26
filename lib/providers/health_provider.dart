@@ -4,7 +4,8 @@ import '../models/health_record.dart';
 import '../utils/constants.dart';
 
 class HealthProvider with ChangeNotifier {
-  final Box<HealthRecord> _healthBox = Hive.box<HealthRecord>(AppConstants.healthBox);
+  final Box<HealthRecord> _healthBox =
+      Hive.box<HealthRecord>(AppConstants.healthBox);
   List<HealthRecord> _records = [];
 
   List<HealthRecord> get records => _records;
@@ -14,7 +15,8 @@ class HealthProvider with ChangeNotifier {
   }
 
   void loadRecords() {
-    _records = _healthBox.values.toList()..sort((a, b) => b.checkupDate.compareTo(a.checkupDate));
+    _records = _healthBox.values.toList()
+      ..sort((a, b) => b.checkupDate.compareTo(a.checkupDate));
     notifyListeners();
   }
 
@@ -24,7 +26,7 @@ class HealthProvider with ChangeNotifier {
   }
 
   Future<void> updateRecord(HealthRecord record) async {
-    await record.save();
+    await _healthBox.put(record.id, record);
     loadRecords();
   }
 
