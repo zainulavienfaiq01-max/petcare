@@ -34,6 +34,15 @@ class AuthProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> updateProfile(String name, String email) async {
+    _userName = name;
+    _userEmail = email;
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(AppConstants.keyUserName, name);
+    await prefs.setString(AppConstants.keyUserEmail, email);
+    notifyListeners();
+  }
+
   Future<void> logout() async {
     _isLoggedIn = false;
     _userName = '';

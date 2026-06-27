@@ -89,21 +89,9 @@ class BreedDetailScreen extends StatelessWidget {
                     fit: StackFit.expand,
                     children: [
                       // Breed image
-                      Image.network(
+                      Image.asset(
                         breed.imageUrl,
                         fit: BoxFit.cover,
-                        loadingBuilder: (_, child, progress) =>
-                            progress == null
-                                ? child
-                                : Container(
-                                    decoration:
-                                        BoxDecoration(gradient: _gradient),
-                                    child: const Center(
-                                      child: CircularProgressIndicator(
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ),
                         errorBuilder: (_, __, ___) => Container(
                           decoration: BoxDecoration(gradient: _gradient),
                           child: Center(

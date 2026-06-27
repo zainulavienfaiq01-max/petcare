@@ -88,15 +88,6 @@ class NotificationProvider extends ChangeNotifier {
         category: 'grooming',
       ),
       NotificationItem(
-        id: '4',
-        title: 'Vet Consultation',
-        subtitle: 'Dr. Sarah has responded to your consultation.',
-        icon: Icons.medical_services,
-        color: Colors.blue,
-        time: DateTime.now().subtract(const Duration(hours: 5)),
-        category: 'consultation',
-      ),
-      NotificationItem(
         id: '5',
         title: 'Schedule Reminder',
         subtitle: 'You have 3 pet activities scheduled for today.',
@@ -143,14 +134,6 @@ class NotificationScreen extends StatelessWidget {
         color: Colors.pink,
         time: '3 hours ago',
         isRead: false,
-      ),
-      _NotifData(
-        title: 'Vet Consultation',
-        subtitle: 'Dr. Sarah has responded to your consultation.',
-        icon: Icons.medical_services,
-        color: Colors.blue,
-        time: '5 hours ago',
-        isRead: true,
       ),
       _NotifData(
         title: 'Schedule Reminder',

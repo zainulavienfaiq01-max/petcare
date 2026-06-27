@@ -11,7 +11,7 @@ import '../providers/audio_provider.dart';
 import '../utils/colors.dart';
 import '../utils/constants.dart';
 import '../widgets/stat_card.dart';
-import 'consultation_screen.dart';
+
 import 'library_hub_screen.dart';
 import 'pet_tips_screen.dart';
 import 'notification_screen.dart';
@@ -379,25 +379,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                                 );
                               },
                             ),
-                            _QuickActionCard(
-                              title: t('consultation'),
-                              icon: Icons.health_and_safety,
-                              gradient: const LinearGradient(
-                                colors: [
-                                  Color(0xFF4facfe),
-                                  Color(0xFF00f2fe)
-                                ],
-                              ),
-                              onTap: () {
-                                context.read<AudioProvider>().playActionClick();
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (_) =>
-                                          const ConsultationScreen()),
-                                );
-                              },
-                            ),
+
                             _QuickActionCard(
                               title: t('nav_schedule'),
                               icon: Icons.calendar_month,

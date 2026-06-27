@@ -328,21 +328,11 @@ class _BreedCard extends StatelessWidget {
                   topLeft: Radius.circular(20),
                   bottomLeft: Radius.circular(20),
                 ),
-                child: Image.network(
+                child: Image.asset(
                   breed.imageUrl,
                   width: 110,
                   height: 110,
                   fit: BoxFit.cover,
-                  loadingBuilder: (_, child, progress) => progress == null
-                      ? child
-                      : Container(
-                          width: 110,
-                          height: 110,
-                          color: Colors.grey[100],
-                          child: const Center(
-                            child: CircularProgressIndicator(strokeWidth: 2),
-                          ),
-                        ),
                   errorBuilder: (_, __, ___) => Container(
                     width: 110,
                     height: 110,

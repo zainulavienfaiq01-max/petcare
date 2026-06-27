@@ -144,8 +144,7 @@ class _PetLibraryScreenState extends State<PetLibraryScreen>
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                       ),
-                      imageUrl:
-                          'https://images.unsplash.com/photo-1587300003388-59208cc962cb?auto=format&fit=crop&w=600&q=80',
+                      imageUrl: 'assets/images/dogs/YellowLabradorLooking.jpg',
                       onTap: () => Navigator.push(
                         context,
                         PageRouteBuilder(
@@ -178,8 +177,7 @@ class _PetLibraryScreenState extends State<PetLibraryScreen>
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                       ),
-                      imageUrl:
-                          'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=600&q=80',
+                      imageUrl: 'assets/images/cats/Persian_in_Cat_Cafe.jpg',
                       onTap: () => Navigator.push(
                         context,
                         PageRouteBuilder(
@@ -288,7 +286,7 @@ class _CategoryCardState extends State<_CategoryCard>
                 bottom: -20,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(20),
-                  child: Image.network(
+                  child: Image.asset(
                     widget.imageUrl,
                     width: 180,
                     height: 180,

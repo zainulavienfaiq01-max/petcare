@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import '../providers/locale_provider.dart';
 import '../utils/colors.dart';
 
 /// Pet Tips & Articles screen — the 4th Quick Action feature.
@@ -10,6 +12,8 @@ class PetTipsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final locale = context.watch<LocaleProvider>();
+    final t = locale.translate;
 
     return Scaffold(
       backgroundColor: isDark ? AppColors.backgroundDark : Colors.grey[50],
@@ -45,7 +49,7 @@ class PetTipsScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 10),
                       Text(
-                        'Pet Tips & Articles',
+                        t('pet_tips_title'),
                         style: GoogleFonts.poppins(
                           color: Colors.white,
                           fontSize: 22,
@@ -53,7 +57,7 @@ class PetTipsScreen extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        'Expert advice for your furry friends',
+                        t('pet_tips_desc'),
                         style: GoogleFonts.poppins(
                           color: Colors.white.withValues(alpha: 0.85),
                           fontSize: 13,
@@ -75,18 +79,18 @@ class PetTipsScreen extends StatelessWidget {
                 height: 42,
                 child: ListView(
                   scrollDirection: Axis.horizontal,
-                  children: const [
-                    _CategoryChip(label: 'All', isSelected: true),
-                    SizedBox(width: 8),
-                    _CategoryChip(label: 'Nutrition'),
-                    SizedBox(width: 8),
-                    _CategoryChip(label: 'Health'),
-                    SizedBox(width: 8),
-                    _CategoryChip(label: 'Training'),
-                    SizedBox(width: 8),
-                    _CategoryChip(label: 'Grooming'),
-                    SizedBox(width: 8),
-                    _CategoryChip(label: 'Safety'),
+                  children: [
+                    _CategoryChip(label: t('all'), isSelected: true),
+                    const SizedBox(width: 8),
+                    _CategoryChip(label: t('cat_nutrition')),
+                    const SizedBox(width: 8),
+                    _CategoryChip(label: t('cat_health')),
+                    const SizedBox(width: 8),
+                    _CategoryChip(label: t('cat_training')),
+                    const SizedBox(width: 8),
+                    _CategoryChip(label: t('cat_grooming')),
+                    const SizedBox(width: 8),
+                    _CategoryChip(label: t('cat_safety')),
                   ],
                 ),
               ),
@@ -156,7 +160,7 @@ class PetTipsScreen extends StatelessWidget {
                                               BorderRadius.circular(8),
                                         ),
                                         child: Text(
-                                          tip.category,
+                                          t(tip.category),
                                           style: GoogleFonts.poppins(
                                             fontSize: 10,
                                             fontWeight: FontWeight.w600,
@@ -168,7 +172,7 @@ class PetTipsScreen extends StatelessWidget {
                                   ),
                                   const SizedBox(height: 6),
                                   Text(
-                                    tip.title,
+                                    t(tip.title),
                                     style: GoogleFonts.poppins(
                                       fontSize: 15,
                                       fontWeight: FontWeight.bold,
@@ -179,7 +183,7 @@ class PetTipsScreen extends StatelessWidget {
                                   ),
                                   const SizedBox(height: 4),
                                   Text(
-                                    tip.description,
+                                    t(tip.description),
                                     style: GoogleFonts.poppins(
                                       fontSize: 12,
                                       color: isDark
@@ -264,66 +268,58 @@ class _TipData {
 
 const List<_TipData> _tips = [
   _TipData(
-    title: 'How Much Water Should Your Dog Drink?',
-    description:
-        'A general rule of thumb is that dogs should drink about 1 ounce of water per pound of body weight each day. Puppies and active dogs may need more.',
-    category: 'Nutrition',
+    title: 'tip_1_title',
+    description: 'tip_1_desc',
+    category: 'cat_nutrition',
     icon: Icons.water_drop,
     color: Colors.blue,
   ),
   _TipData(
-    title: 'Signs Your Cat May Be Sick',
-    description:
-        'Watch for changes in appetite, litter box habits, hiding behavior, excessive grooming, or sudden weight loss. Early detection is key.',
-    category: 'Health',
+    title: 'tip_2_title',
+    description: 'tip_2_desc',
+    category: 'cat_health',
     icon: Icons.health_and_safety,
     color: Colors.red,
   ),
   _TipData(
-    title: '5 Basic Commands Every Dog Should Know',
-    description:
-        'Start with Sit, Stay, Come, Down, and Leave It. Consistent training with positive reinforcement will build a strong bond with your pet.',
-    category: 'Training',
+    title: 'tip_3_title',
+    description: 'tip_3_desc',
+    category: 'cat_training',
     icon: Icons.school,
     color: Colors.purple,
   ),
   _TipData(
-    title: 'Brushing Your Pet\'s Teeth at Home',
-    description:
-        'Use a pet-specific toothbrush and toothpaste. Start slowly and make it a positive experience. Aim for brushing at least 2-3 times per week.',
-    category: 'Grooming',
+    title: 'tip_4_title',
+    description: 'tip_4_desc',
+    category: 'cat_grooming',
     icon: Icons.clean_hands,
     color: Colors.pink,
   ),
   _TipData(
-    title: 'Toxic Foods Your Pets Must Avoid',
-    description:
-        'Chocolate, grapes, onions, garlic, xylitol, and macadamia nuts are toxic to dogs and cats. Keep them out of reach at all times.',
-    category: 'Safety',
+    title: 'tip_5_title',
+    description: 'tip_5_desc',
+    category: 'cat_safety',
     icon: Icons.warning_amber,
     color: Colors.orange,
   ),
   _TipData(
-    title: 'Ideal Diet for Senior Cats',
-    description:
-        'Senior cats need more protein and fewer calories. Look for foods with joint support supplements like glucosamine and omega fatty acids.',
-    category: 'Nutrition',
+    title: 'tip_6_title',
+    description: 'tip_6_desc',
+    category: 'cat_nutrition',
     icon: Icons.restaurant,
     color: Colors.teal,
   ),
   _TipData(
-    title: 'How Often Should You Bathe Your Dog?',
-    description:
-        'Most dogs only need a bath every 4-6 weeks, unless they get dirty or have skin conditions. Over-bathing can strip natural oils from their coat.',
-    category: 'Grooming',
+    title: 'tip_7_title',
+    description: 'tip_7_desc',
+    category: 'cat_grooming',
     icon: Icons.bathtub,
     color: Colors.cyan,
   ),
   _TipData(
-    title: 'Creating a Pet Emergency Kit',
-    description:
-        'Include first aid supplies, medications, copies of vet records, food, water, a leash, and a carrier. Update the kit every 6 months.',
-    category: 'Safety',
+    title: 'tip_8_title',
+    description: 'tip_8_desc',
+    category: 'cat_safety',
     icon: Icons.medical_services,
     color: Colors.green,
   ),

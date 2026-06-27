@@ -8,7 +8,7 @@ import '../providers/audio_provider.dart';
 import '../utils/colors.dart';
 import '../utils/constants.dart';
 import 'emergency_contacts_screen.dart';
-
+import 'notification_screen.dart'; // Added missing import
 /// Redesigned Profile screen with gradient header, dark mode support,
 /// language settings, and animated settings tiles.
 
@@ -145,15 +145,9 @@ class ProfileScreen extends StatelessWidget {
 
                           // Edit profile button
                           OutlinedButton.icon(
-                            onPressed: () {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                    content:
-                                        Text('Edit profile coming soon!')),
-                              );
-                            },
+                            onPressed: () => _showEditProfileDialog(context, authProvider, t),
                             icon: const Icon(Icons.edit, size: 16),
-                            label: Text('Edit Profile',
+                            label: Text(t('edit_profile') != 'edit_profile' ? t('edit_profile') : 'Edit Profile',
                                 style: GoogleFonts.poppins(fontSize: 13)),
                             style: OutlinedButton.styleFrom(
                               foregroundColor: Colors.white,
@@ -198,8 +192,8 @@ class ProfileScreen extends StatelessWidget {
                           _SettingsTile(
                             icon: Icons.music_note,
                             iconColor: Colors.deepPurple,
-                            title: 'Background Music',
-                            subtitle: 'Play relaxing background music',
+                            title: t('bgm') != 'bgm' ? t('bgm') : 'Background Music',
+                            subtitle: t('bgm_sub') != 'bgm_sub' ? t('bgm_sub') : 'Play relaxing background music',
                             isDark: isDark,
                             trailing: Switch(
                               value: audioProvider.isBgmEnabled,
@@ -231,21 +225,23 @@ class ProfileScreen extends StatelessWidget {
                           _SettingsTile(
                             icon: Icons.notifications_outlined,
                             iconColor: Colors.orange,
-                            title: 'Notifications',
-                            subtitle: 'Manage reminders & alerts',
+                            title: t('notifications') != 'notifications' ? t('notifications') : 'Notifications',
+                            subtitle: t('notifications_sub') != 'notifications_sub' ? t('notifications_sub') : 'Manage reminders & alerts',
                             isDark: isDark,
-                            trailing: const Icon(Icons.chevron_right,
-                                color: Colors.grey, size: 20),
+                            trailing: const Icon(Icons.chevron_right, color: Colors.grey, size: 20),
+                            onTap: () {
+                              context.read<AudioProvider>().playActionClick();
+                              Navigator.push(context, MaterialPageRoute(builder: (_) => const NotificationScreen()));
+                            },
                           ),
                           _divider(isDark),
                           _SettingsTile(
                             icon: Icons.contact_emergency,
                             iconColor: AppColors.error,
-                            title: 'Emergency Contacts',
-                            subtitle: 'Important numbers for pet emergencies',
+                            title: t('emergency_contacts') != 'emergency_contacts' ? t('emergency_contacts') : 'Emergency Contacts',
+                            subtitle: t('emergency_contacts_sub') != 'emergency_contacts_sub' ? t('emergency_contacts_sub') : 'Important numbers for pet emergencies',
                             isDark: isDark,
-                            trailing: const Icon(Icons.chevron_right,
-                                color: Colors.grey, size: 20),
+                            trailing: const Icon(Icons.chevron_right, color: Colors.grey, size: 20),
                             onTap: () {
                               context.read<AudioProvider>().playActionClick();
                               Navigator.push(context, MaterialPageRoute(builder: (_) => const EmergencyContactsScreen()));
@@ -256,11 +252,11 @@ class ProfileScreen extends StatelessWidget {
                           _SettingsTile(
                             icon: Icons.help_outline,
                             iconColor: Colors.teal,
-                            title: 'Help & Support',
-                            subtitle: 'FAQ & contact us',
+                            title: t('help_support') != 'help_support' ? t('help_support') : 'Help & Support',
+                            subtitle: t('help_support_sub') != 'help_support_sub' ? t('help_support_sub') : 'FAQ & contact us',
                             isDark: isDark,
-                            trailing: const Icon(Icons.chevron_right,
-                                color: Colors.grey, size: 20),
+                            trailing: const Icon(Icons.chevron_right, color: Colors.grey, size: 20),
+                            onTap: () => _showHelpSupportDialog(context, t),
                           ),
                         ],
                       ),
@@ -284,7 +280,19 @@ class ProfileScreen extends StatelessWidget {
 
                       const SizedBox(height: 14),
 
-                      // Logout section removed
+                      // ── Logout Section ──────────────────────────────────
+                      _SettingsGroup(
+                        isDark: isDark,
+                        children: [
+                          _SettingsTile(
+                            icon: Icons.logout,
+                            iconColor: AppColors.error,
+                            title: t('logout'),
+                            isDark: isDark,
+                            onTap: () => _showLogoutDialog(context, authProvider, t),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                 ),
@@ -377,7 +385,113 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  // Logout dialog removed
+  // ── Logout dialog ───────────────────────────────────────────────────────
+  void _showLogoutDialog(BuildContext context, AuthProvider auth, String Function(String) t) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        backgroundColor: isDark ? AppColors.cardDark : Colors.white,
+        title: Text(t('logout'), style: GoogleFonts.poppins(fontWeight: FontWeight.bold, color: AppColors.error)),
+        content: Text(t('logout_confirm'), style: GoogleFonts.poppins()),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: Text(t('cancel'), style: TextStyle(color: Colors.grey)),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pop(ctx);
+              auth.logout();
+            },
+            style: ElevatedButton.styleFrom(backgroundColor: AppColors.error),
+            child: Text(t('logout'), style: const TextStyle(color: Colors.white)),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // ── Edit Profile Dialog ──────────────────────────────────────────────────
+  void _showEditProfileDialog(BuildContext context, AuthProvider auth, String Function(String) t) {
+    final nameController = TextEditingController(text: auth.userName);
+    final emailController = TextEditingController(text: auth.userEmail);
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        backgroundColor: isDark ? AppColors.cardDark : Colors.white,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        title: Text(
+          t('edit_profile') != 'edit_profile' ? t('edit_profile') : 'Edit Profile',
+          style: GoogleFonts.poppins(fontWeight: FontWeight.bold, fontSize: 18),
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextField(
+              controller: nameController,
+              decoration: InputDecoration(
+                labelText: t('username') != 'username' ? t('username') : 'Username',
+                border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+              ),
+            ),
+            const SizedBox(height: 16),
+            TextField(
+              controller: emailController,
+              decoration: InputDecoration(
+                labelText: 'Email',
+                border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+              ),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: Text(t('cancel'), style: const TextStyle(color: Colors.grey)),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              auth.updateProfile(nameController.text.trim(), emailController.text.trim());
+              Navigator.pop(ctx);
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.primaryPurple,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            ),
+            child: Text(t('save'), style: const TextStyle(color: Colors.white)),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // ── Help & Support Dialog ────────────────────────────────────────────────
+  void _showHelpSupportDialog(BuildContext context, String Function(String) t) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        backgroundColor: isDark ? AppColors.cardDark : Colors.white,
+        title: Text(
+          t('help_support') != 'help_support' ? t('help_support') : 'Help & Support',
+          style: GoogleFonts.poppins(fontWeight: FontWeight.bold),
+        ),
+        content: Text(
+          'For support, contact us at:\nsupport@petcare.com\n\nOr visit our website.',
+          style: GoogleFonts.poppins(height: 1.5),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: Text(t('close'), style: const TextStyle(color: AppColors.primaryPurple)),
+          ),
+        ],
+      ),
+    );
+  }
 }
 
 // ── Settings Group Card ──────────────────────────────────────────────────────

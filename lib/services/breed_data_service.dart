@@ -16,7 +16,7 @@ class BreedDataService {
       description:
           'The Labrador Retriever is one of the most popular dog breeds in the world. Originally bred as a working retriever, Labs are known for their gentle nature, intelligence, and loyalty. They excel as guide dogs, search-and-rescue dogs, and family companions.',
       imageUrl:
-          'https://upload.wikimedia.org/wikipedia/commons/3/34/Labrador_on_Quantock_%282175262184%29.jpg',
+          'assets/images/dogs/YellowLabradorLooking.jpg',
       temperament: 'Gentle, Friendly, Intelligent',
       size: 3.5,
     ),
@@ -31,7 +31,7 @@ class BreedDataService {
       description:
           'Golden Retrievers are highly intelligent dogs that are incredibly patient and devoted. Their kind eyes, lustrous golden coat, and enthusiastic character make them one of the most beloved family dogs in the world.',
       imageUrl:
-          'https://upload.wikimedia.org/wikipedia/commons/c/c0/Golden_Retriever_with_tennis_ball.jpg',
+          'assets/images/dogs/golden retriever.webp',
       temperament: 'Reliable, Trustworthy, Kind',
       size: 3.5,
     ),
@@ -46,7 +46,7 @@ class BreedDataService {
       description:
           'Siberian Huskies were bred by the Chukchi people of Siberia as sled dogs. They are known for their striking blue or multi-colored eyes and thick, beautiful coats. Huskies are energetic and need lots of exercise.',
       imageUrl:
-          'https://upload.wikimedia.org/wikipedia/commons/a/a3/Black-Magic-Big-Boy.jpg',
+          'assets/images/dogs/The_Husky.jpg',
       temperament: 'Outgoing, Mischievous, Loyal',
       size: 3,
     ),
@@ -61,7 +61,7 @@ class BreedDataService {
       description:
           'Poodles are among the most intelligent of all dog breeds. They are active, proud, and very smart. Poodles come in three sizes (standard, miniature, and toy) and their curly, hypoallergenic coat comes in many colors.',
       imageUrl:
-          'https://upload.wikimedia.org/wikipedia/commons/f/f8/Full_attention_%288067543690%29.jpg',
+          'assets/images/dogs/Full_attention_(8067543690).jpg',
       temperament: 'Intelligent, Alert, Faithful',
       size: 2.5,
     ),
@@ -76,7 +76,7 @@ class BreedDataService {
       description:
           'The French Bulldog is a small but muscular dog with a smooth coat, snub nose, and bat-like ears. Frenchies are patient, affectionate, and playful, making them excellent companions for city dwellers.',
       imageUrl:
-          'https://upload.wikimedia.org/wikipedia/commons/1/18/French_Bulldog_22.jpg',
+          'assets/images/dogs/2008-07-28_Dog_at_Frolick_Field.jpg',
       temperament: 'Adaptable, Playful, Affectionate',
       size: 1.5,
     ),
@@ -91,7 +91,7 @@ class BreedDataService {
       description:
           'German Shepherds are widely used as police, guard, and military dogs. Highly intelligent and versatile, they excel in almost any task they are trained to perform. They are extremely loyal and protective of their families.',
       imageUrl:
-          'https://upload.wikimedia.org/wikipedia/commons/d/d0/German_Shepherd_-_Aron.jpg',
+          'assets/images/dogs/Military_Working_Dog_-_American_Air_Day_2012_(7831960226).2.jpg',
       temperament: 'Loyal, Courageous, Confident',
       size: 4,
     ),
@@ -106,7 +106,7 @@ class BreedDataService {
       description:
           'Beagles are curious, clever, and energetic. Originally bred for hunting hares, they have an excellent sense of smell and tracking instinct. Their compact size, even temper, and lack of inherited health problems make them ideal pets.',
       imageUrl:
-          'https://upload.wikimedia.org/wikipedia/commons/5/55/Beagle_600.jpg',
+          'assets/images/dogs/Beagle_600.jpg',
       temperament: 'Merry, Friendly, Curious',
       size: 2,
     ),
@@ -121,7 +121,7 @@ class BreedDataService {
       description:
           'The Pomeranian is a compact, active toy dog with a fluffy double coat. Despite their small size, Pomeranians are bold and curious dogs with a big personality. They are intelligent and respond well to training.',
       imageUrl:
-          'https://upload.wikimedia.org/wikipedia/commons/c/c6/Pomeranian_Dog.jpg',
+          'assets/images/dogs/Pomeranian_orange-sable_Coco.jpg',
       temperament: 'Lively, Playful, Friendly',
       size: 1,
     ),
@@ -136,7 +136,7 @@ class BreedDataService {
       description:
           'The Shiba Inu is the smallest of Japan\'s six native breeds and is also the most popular companion dog in Japan. Originally bred for hunting in mountainous terrain, Shibas are alert, agile, and bold dogs with a good nature.',
       imageUrl:
-          'https://upload.wikimedia.org/wikipedia/commons/5/58/Shiba_inu_taiki.jpg',
+          'assets/images/dogs/Shiba_Inu_600.jpg',
       temperament: 'Bold, Fiery, Alert',
       size: 2,
     ),
@@ -151,7 +151,7 @@ class BreedDataService {
       description:
           'The Dalmatian is a large dog, well-muscled, and with a distinctive spotted coat. The breed is highly energetic and playful and needs plenty of exercise. Dalmatians are intelligent and loyal dogs that love to be with their families.',
       imageUrl:
-          'https://upload.wikimedia.org/wikipedia/commons/1/15/Dalmatian_standing_looking.jpg',
+          'assets/images/dogs/Dalmatian_puppy,_four_months.png',
       temperament: 'Playful, Energetic, Sensitive',
       size: 3.5,
     ),
@@ -170,7 +170,7 @@ class BreedDataService {
       description:
           'Persian cats are known for their long, luxurious coats and sweet, gentle personalities. They are calm, laid-back cats who enjoy lounging and being pampered. Persians require daily grooming to keep their coat free of tangles.',
       imageUrl:
-          'https://upload.wikimedia.org/wikipedia/commons/1/15/White_Persian_Cat.jpg',
+          'assets/images/cats/Persian_in_Cat_Cafe.jpg',
       temperament: 'Quiet, Gentle, Affectionate',
       size: 2.5,
     ),
@@ -185,7 +185,7 @@ class BreedDataService {
       description:
           'Siamese cats are one of the first distinctly recognized breeds. They are known for their striking blue eyes and distinctive colorpoint pattern. Siamese are very social, vocal, and enjoy interacting with their owners.',
       imageUrl:
-          'https://upload.wikimedia.org/wikipedia/commons/2/25/Siam_lilacpoint.jpg',
+          'assets/images/cats/Siam_lilacpoint.jpg',
       temperament: 'Social, Vocal, Intelligent',
       size: 2,
     ),
@@ -200,7 +200,7 @@ class BreedDataService {
       description:
           'Maine Coons are one of the largest domesticated cat breeds. They are known for their thick, water-resistant fur and bushy tails. Often called "the dog of the cat world", Maine Coons are playful, intelligent, and friendly.',
       imageUrl:
-          'https://upload.wikimedia.org/wikipedia/commons/5/5b/Maine_Coon_cat_by_Tomitheos.JPG',
+          'assets/images/cats/Mâle_Black_Silver_Blotched_Tabby.jpeg',
       temperament: 'Friendly, Playful, Intelligent',
       size: 4,
     ),
@@ -215,7 +215,7 @@ class BreedDataService {
       description:
           'The British Shorthair is a pedigreed version of the traditional British domestic cat. Known for their round faces, dense coats, and easygoing personalities, they are calm and devoted companions that adapt well to apartment life.',
       imageUrl:
-          'https://upload.wikimedia.org/wikipedia/commons/9/9d/Britishblue.jpg',
+          'assets/images/cats/Mystica_from_British_Empire_Cattery.jpg',
       temperament: 'Calm, Easygoing, Loyal',
       size: 3,
     ),
@@ -230,7 +230,7 @@ class BreedDataService {
       description:
           'Ragdolls are large, docile cats with a silky coat and striking blue eyes. They are known for going limp when held — hence the name "Ragdoll". They are extremely gentle, calm, and devoted companions that get along well with children.',
       imageUrl:
-          'https://upload.wikimedia.org/wikipedia/commons/6/64/Ragdoll_Bicolor.jpg',
+          'assets/images/cats/Flame_point_Ragdoll.jpg',
       temperament: 'Docile, Affectionate, Calm',
       size: 4,
     ),
@@ -245,7 +245,7 @@ class BreedDataService {
       description:
           'Bengal cats have a wild appearance with their distinctive spotted or marbled coat that resembles a miniature leopard. They are highly energetic, athletic, and playful — and unlike most cats, many Bengals love water.',
       imageUrl:
-          'https://upload.wikimedia.org/wikipedia/commons/b/ba/Paintedcats_Red_Star_standing.jpg',
+          'assets/images/cats/Esmeralda_MayaGold_BEN_n_22.jpg',
       temperament: 'Alert, Energetic, Playful',
       size: 2.5,
     ),
@@ -260,7 +260,7 @@ class BreedDataService {
       description:
           'Scottish Folds are known for their distinctive folded ears, which give them an owl-like appearance. They are gentle, adaptable, and calm cats that get along well with children and other pets. They tend to be very quiet.',
       imageUrl:
-          'https://upload.wikimedia.org/wikipedia/commons/5/5d/Adult_Scottish_Fold.jpg',
+          'assets/images/cats/Scottish_Fold_Kater_mit_6_Monaten.jpg',
       temperament: 'Sweet, Calm, Adaptable',
       size: 2.5,
     ),
@@ -275,7 +275,7 @@ class BreedDataService {
       description:
           'The Abyssinian is a slender, athletic cat with a distinctively ticked coat. They are one of the oldest known cat breeds and are extremely curious, active, and intelligent. Abyssinians love to climb and explore their environment.',
       imageUrl:
-          'https://upload.wikimedia.org/wikipedia/commons/9/9b/Gustav_chocolate.jpg',
+          'assets/images/cats/Gustav_chocolate.jpg',
       temperament: 'Curious, Active, Independent',
       size: 2,
     ),
@@ -290,7 +290,7 @@ class BreedDataService {
       description:
           'The Sphynx is best known for its lack of fur. Despite their alien appearance, Sphynx cats are extremely affectionate, energetic, and love being the center of attention. They are very warm to the touch and often seek warmth from humans.',
       imageUrl:
-          'https://upload.wikimedia.org/wikipedia/commons/e/e8/Sphinx2_simona.jpg',
+          'assets/images/cats/Sphynx_-_cat._img_031.jpg',
       temperament: 'Extroverted, Affectionate, Demanding',
       size: 2,
     ),
@@ -305,7 +305,7 @@ class BreedDataService {
       description:
           'The Norwegian Forest Cat is adapted to the cold Scandinavian climate with its thick, water-resistant double coat. They are strong, muscular cats that love to climb and explore. Despite their independent streak, they are devoted to their families.',
       imageUrl:
-          'https://upload.wikimedia.org/wikipedia/commons/0/0f/Norwegian_Forest_Cat_in_snow.jpg',
+          'assets/images/cats/Norskskogkatt_Evita_3.jpg',
       temperament: 'Friendly, Gentle, Independent',
       size: 3.5,
     ),
