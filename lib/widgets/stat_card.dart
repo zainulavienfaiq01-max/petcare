@@ -30,12 +30,15 @@ class StatCard extends StatelessWidget {
         children: [
           Icon(icon, size: 32, color: Colors.white),
           const SizedBox(height: 12),
-          Text(
-            value,
-            style: GoogleFonts.poppins(
-              fontSize: 28,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              value,
+              style: GoogleFonts.poppins(
+                fontSize: 28,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
             ),
           ),
           const SizedBox(height: 4),
@@ -46,6 +49,8 @@ class StatCard extends StatelessWidget {
               color: Colors.white.withValues(alpha: 0.9),
             ),
             textAlign: TextAlign.center,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
           ),
         ],
       ),

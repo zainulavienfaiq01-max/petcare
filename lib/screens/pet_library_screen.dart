@@ -127,7 +127,7 @@ class _PetLibraryScreenState extends State<PetLibraryScreen>
 
           // ── Category Cards ─────────────────────────────────────────────────
           SliverFillRemaining(
-            hasScrollBody: false,
+            hasScrollBody: true,
             child: Padding(
               padding: const EdgeInsets.all(24),
               child: Column(
@@ -265,7 +265,7 @@ class _CategoryCardState extends State<_CategoryCard>
         },
         onTapCancel: () => _scaleController.forward(),
         child: Container(
-          height: 160,
+          height: 220,
           decoration: BoxDecoration(
             gradient: widget.gradient,
             borderRadius: BorderRadius.circular(24),
@@ -299,43 +299,39 @@ class _CategoryCardState extends State<_CategoryCard>
               ),
               // Content
               Padding(
-                padding: const EdgeInsets.all(24),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      widget.emoji,
-                      style: const TextStyle(fontSize: 44),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      widget.label,
-                      style: GoogleFonts.poppins(
-                        color: Colors.white,
-                        fontSize: 26,
-                        fontWeight: FontWeight.bold,
+                padding: const EdgeInsets.all(16),
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        widget.emoji,
+                        style: const TextStyle(fontSize: 28),
                       ),
-                    ),
-                    Text(
-                      widget.subtitle,
-                      style: GoogleFonts.poppins(
-                        color: Colors.white.withValues(alpha: 0.85),
-                        fontSize: 13,
+                      const SizedBox(height: 2),
+                      Text(
+                        widget.label,
+                        style: GoogleFonts.poppins(
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
-                    ),
-                  ],
-                ),
-              ),
-              // Arrow indicator
-              Positioned(
-                right: 20,
-                top: 0,
-                bottom: 0,
-                child: Icon(
-                  Icons.arrow_forward_ios,
-                  color: Colors.white.withValues(alpha: 0.7),
-                  size: 20,
+                      Text(
+                        widget.subtitle,
+                        style: GoogleFonts.poppins(
+                          color: Colors.white.withValues(alpha: 0.85),
+                          fontSize: 10,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],

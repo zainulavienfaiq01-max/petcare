@@ -415,11 +415,15 @@ class _BreedCard extends StatelessWidget {
                           Icon(Icons.timer_outlined,
                               size: 13, color: accentColor),
                           const SizedBox(width: 3),
-                          Text(
-                            breed.lifespan,
-                            style: GoogleFonts.poppins(
-                              fontSize: 11,
-                              color: Colors.grey[500],
+                          Expanded(
+                            child: Text(
+                              breed.lifespan,
+                              style: GoogleFonts.poppins(
+                                fontSize: 11,
+                                color: Colors.grey[500],
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
                             ),
                           ),
                         ],

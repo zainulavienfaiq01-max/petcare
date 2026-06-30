@@ -462,6 +462,8 @@ class _DiseaseCard extends StatelessWidget {
                           ? AppColors.textPrimaryDark
                           : AppColors.textPrimary,
                     ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
                   const SizedBox(height: 4),
                   // Animal badges

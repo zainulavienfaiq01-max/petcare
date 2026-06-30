@@ -55,6 +55,9 @@ class _DashboardScreenState extends State<DashboardScreen>
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final themeProvider = context.watch<ThemeProvider>();
     final authProvider = context.watch<AuthProvider>();
+    final screenWidth = MediaQuery.sizeOf(context).width;
+    final double quickActionAspectRatio = screenWidth < 380 ? 1.05 : 1.25;
+    final double statCardAspectRatio = screenWidth < 380 ? 0.9 : 1.0;
 
     return Scaffold(
       backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
@@ -358,7 +361,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                           mainAxisSpacing: 14,
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
-                          childAspectRatio: 1.55,
+                          childAspectRatio: quickActionAspectRatio,
                           children: [
                             _QuickActionCard(
                               title: t('pet_library'),
@@ -436,6 +439,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                           mainAxisSpacing: 12,
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
+                          childAspectRatio: statCardAspectRatio,
                           children: [
                             StatCard(
                               title: t('total_pets'),
@@ -752,16 +756,18 @@ class _QuickActionCardState extends State<_QuickActionCard>
                       child: Icon(widget.icon,
                           color: Colors.white, size: 22),
                     ),
-                    const SizedBox(height: 10),
-                    Text(
-                      widget.title,
-                      style: GoogleFonts.poppins(
-                        color: Colors.white,
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
+                    const SizedBox(height: 6),
+                    Expanded(
+                      child: Text(
+                        widget.title,
+                        style: GoogleFonts.poppins(
+                          color: Colors.white,
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
                       ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
                     ),
                   ],
                 ),

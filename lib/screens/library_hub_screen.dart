@@ -269,7 +269,7 @@ class _HubCardState extends State<_HubCard>
         },
         onTapCancel: () => _scaleController.forward(),
         child: Container(
-          height: 160,
+          height: 180,
           decoration: BoxDecoration(
             gradient: widget.gradient,
             borderRadius: BorderRadius.circular(24),
@@ -297,31 +297,43 @@ class _HubCardState extends State<_HubCard>
               // Content
               Padding(
                 padding: const EdgeInsets.all(24),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(widget.emoji,
-                        style: const TextStyle(fontSize: 44)),
-                    const SizedBox(height: 8),
-                    Text(
-                      widget.label,
-                      style: GoogleFonts.poppins(
-                        color: Colors.white,
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
+                child:Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        widget.emoji,
+                        style: const TextStyle(fontSize: 36),
                       ),
-                    ),
-                    Text(
-                      widget.subtitle,
-                      style: GoogleFonts.poppins(
-                        color: Colors.white.withValues(alpha: 0.85),
-                        fontSize: 13,
+                      const SizedBox(height: 4),
+                      Flexible(
+                        child: Text(
+                          widget.label,
+                          style: GoogleFonts.poppins(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ),
-                    ),
-                  ],
+                      const SizedBox(height: 2),
+                      Flexible(
+                        child: Text(
+                          widget.subtitle,
+                          style: GoogleFonts.poppins(
+                            color: Colors.white.withValues(alpha: 0.85),
+                            fontSize: 11,
+                          ),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
               // Arrow
               Positioned(
                 right: 20,
