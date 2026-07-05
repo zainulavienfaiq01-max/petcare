@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.petcare_apk"
+    namespace = "com.zainulavienfaiq.petcare_app"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
@@ -24,7 +24,7 @@ android {
 
 
     defaultConfig {
-        applicationId = "com.petcare.app"
+        applicationId = "com.zainulavienfaiq.petcare_app"
         minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode

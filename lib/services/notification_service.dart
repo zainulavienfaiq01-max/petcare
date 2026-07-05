@@ -155,10 +155,24 @@ class NotificationService {
     const androidDetails = AndroidNotificationDetails(
       'petcare_channel',
       'PetCare Reminders',
-      channelDescription: 'Notifications for pet care schedules and reminders',
-      importance: Importance.high,
-      priority: Priority.high,
+      channelDescription:
+      'Notifications for pet care schedules and reminders',
+
+      importance: Importance.max,
+      priority: Priority.max,
+
       icon: '@mipmap/ic_launcher',
+
+      enableVibration: true,
+      playSound: true,
+
+      visibility: NotificationVisibility.public,
+
+      category: AndroidNotificationCategory.reminder,
+
+      fullScreenIntent: true,
+
+      ticker: 'PetCare Reminder',
     );
 
     const iosDetails = DarwinNotificationDetails(

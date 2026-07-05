@@ -86,7 +86,7 @@ class ScheduleProvider with ChangeNotifier {
   void _scheduleNotificationForSchedule(Schedule schedule) {
     if (schedule.isCompleted) return;
 
-    final reminderTime = schedule.dateTime.subtract(const Duration(minutes: 15));
+    final reminderTime = schedule.dateTime;
     if (reminderTime.isBefore(DateTime.now())) return;
 
     final emoji = AppConstants.scheduleTypeEmoji[schedule.type] ?? '📅';
@@ -94,7 +94,7 @@ class ScheduleProvider with ChangeNotifier {
     _notificationService.scheduleNotification(
       id: schedule.id.hashCode,
       title: '$emoji ${schedule.type} Reminder',
-      body: 'You have a ${schedule.type.toLowerCase()} scheduled in 15 minutes!',
+      body: 'you have a ${schedule.type.toLowerCase()} at ${schedule.dateTime.hour}:${schedule.dateTime.minute}!',
       scheduledTime: reminderTime,
       payload: schedule.id,
     );

@@ -9,6 +9,8 @@
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"/>
     <uses-permission android:name="android.permission.USE_EXACT_ALARM"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+<uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT"/>
 
     <!-- Camera and storage for image_picker -->
     <uses-permission android:name="android.permission.CAMERA"/>
@@ -44,6 +46,10 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
+        <receiver
+            android:exported="false"
+            android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationReceiver"/>
 
         <!-- flutter_local_notifications: boot receiver for scheduled notifications -->
         <receiver
