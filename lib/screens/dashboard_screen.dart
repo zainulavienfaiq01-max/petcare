@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import '../providers/pet_provider.dart';
 import '../providers/schedule_provider.dart';
+import '../providers/health_provider.dart';
 import '../providers/locale_provider.dart';
 import '../providers/theme_provider.dart';
 import '../providers/auth_provider.dart';
@@ -61,14 +62,21 @@ class _DashboardScreenState extends State<DashboardScreen>
 
     return Scaffold(
       backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
-      body: Consumer2<PetProvider, ScheduleProvider>(
-        builder: (context, petProvider, scheduleProvider, child) {
+      body: Consumer3<PetProvider, ScheduleProvider, HealthProvider>(
+        builder: (context, petProvider, scheduleProvider, healthProvider, child) {
           final pets = petProvider.pets;
           final todaySchedules = scheduleProvider.todaySchedules;
-          final upcomingVaccines = scheduleProvider.schedules
-              .where((s) => s.type == 'Vaksin' && !s.isCompleted)
-              .take(3)
-              .toList();
+
+          // ── Statistics data ──
+          final tomorrowSchedules = scheduleProvider.tomorrowSchedules;
+          final completedCount = scheduleProvider.completedSchedules.length;
+          final overdueCount = scheduleProvider.overdueSchedules.length;
+          final totalVaccinations = healthProvider.records.length;
+
+          // ── Recent Activity (merge schedules + health, take latest 5) ──
+          final recentActivities = _buildRecentActivities(
+            scheduleProvider, healthProvider, petProvider,
+          );
 
           return FadeTransition(
             opacity: _fadeAnim,
@@ -426,9 +434,9 @@ class _DashboardScreenState extends State<DashboardScreen>
 
                         const SizedBox(height: 24),
 
-                        // ── Statistics ─────────────────────────────────────
+                        // ── Pet Statistics (6 cards) ───────────────────────
                         _SectionHeader(
-                          title: t('statistics'),
+                          title: t('pet_statistics'),
                           icon: Icons.bar_chart,
                           isDark: isDark,
                         ),
@@ -441,35 +449,149 @@ class _DashboardScreenState extends State<DashboardScreen>
                           physics: const NeverScrollableScrollPhysics(),
                           childAspectRatio: statCardAspectRatio,
                           children: [
-                            StatCard(
-                              title: t('total_pets'),
-                              value: pets.length.toString(),
-                              icon: Icons.pets,
-                              gradient: AppColors.cardGradient1,
+                            _AnimatedStatCard(
+                              index: 0,
+                              child: StatCard(
+                                title: t('total_pets'),
+                                value: pets.length.toString(),
+                                icon: Icons.pets,
+                                gradient: AppColors.cardGradient1,
+                              ),
                             ),
-                            StatCard(
-                              title: t('todays_tasks'),
-                              value: todaySchedules.length.toString(),
-                              icon: Icons.today,
-                              gradient: AppColors.cardGradient2,
+                            _AnimatedStatCard(
+                              index: 1,
+                              child: StatCard(
+                                title: t('todays_tasks'),
+                                value: todaySchedules.length.toString(),
+                                icon: Icons.today,
+                                gradient: AppColors.cardGradient2,
+                              ),
                             ),
-                            StatCard(
-                              title: t('completed'),
-                              value: scheduleProvider.schedules
-                                  .where((s) => s.isCompleted)
-                                  .length
-                                  .toString(),
-                              icon: Icons.check_circle,
-                              gradient: AppColors.cardGradient3,
+                            _AnimatedStatCard(
+                              index: 2,
+                              child: StatCard(
+                                title: t('tomorrows_schedule'),
+                                value: tomorrowSchedules.length.toString(),
+                                icon: Icons.calendar_month,
+                                gradient: const LinearGradient(
+                                  colors: [Color(0xFF80DEEA), Color(0xFF4DD0E1)],
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                ),
+                              ),
                             ),
-                            StatCard(
-                              title: t('upcoming_vaccines'),
-                              value: upcomingVaccines.length.toString(),
-                              icon: Icons.vaccines,
-                              gradient: AppColors.cardGradient4,
+                            _AnimatedStatCard(
+                              index: 3,
+                              child: StatCard(
+                                title: t('completed_tasks'),
+                                value: completedCount.toString(),
+                                icon: Icons.check_circle,
+                                gradient: AppColors.cardGradient3,
+                              ),
+                            ),
+                            _AnimatedStatCard(
+                              index: 4,
+                              child: StatCard(
+                                title: t('overdue_tasks'),
+                                value: overdueCount.toString(),
+                                icon: Icons.warning_amber_rounded,
+                                gradient: const LinearGradient(
+                                  colors: [Color(0xFFEF9A9A), Color(0xFFE57373)],
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                ),
+                              ),
+                            ),
+                            _AnimatedStatCard(
+                              index: 5,
+                              child: StatCard(
+                                title: t('total_vaccinations'),
+                                value: totalVaccinations.toString(),
+                                icon: Icons.vaccines,
+                                gradient: AppColors.cardGradient4,
+                              ),
                             ),
                           ],
                         ),
+
+                        const SizedBox(height: 24),
+
+                        // ── Recent Activity ──────────────────────────────
+                        _SectionHeader(
+                          title: t('recent_activity'),
+                          icon: Icons.history,
+                          isDark: isDark,
+                        ),
+                        const SizedBox(height: 12),
+                        recentActivities.isEmpty
+                            ? _EmptyActivityCard(isDark: isDark, label: t('no_recent_activity'))
+                            : Column(
+                                children: recentActivities.map((activity) {
+                                  return TweenAnimationBuilder<double>(
+                                    tween: Tween(begin: 0.0, end: 1.0),
+                                    duration: Duration(
+                                        milliseconds: 400 + recentActivities.indexOf(activity) * 80),
+                                    curve: Curves.easeOut,
+                                    builder: (_, value, child) => Opacity(
+                                      opacity: value.clamp(0.0, 1.0),
+                                      child: Transform.translate(
+                                        offset: Offset(0, 12 * (1 - value)),
+                                        child: child,
+                                      ),
+                                    ),
+                                    child: Container(
+                                      margin: const EdgeInsets.only(bottom: 8),
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 16, vertical: 12),
+                                      decoration: BoxDecoration(
+                                        color: isDark
+                                            ? AppColors.cardDark
+                                            : Colors.white,
+                                        borderRadius: BorderRadius.circular(14),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.black.withValues(alpha: 0.04),
+                                            blurRadius: 8,
+                                            offset: const Offset(0, 2),
+                                          ),
+                                        ],
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          Container(
+                                            width: 36,
+                                            height: 36,
+                                            decoration: BoxDecoration(
+                                              color: AppColors.success.withValues(alpha: 0.15),
+                                              borderRadius: BorderRadius.circular(10),
+                                            ),
+                                            child: const Icon(
+                                              Icons.check_circle_outline,
+                                              color: AppColors.success,
+                                              size: 18,
+                                            ),
+                                          ),
+                                          const SizedBox(width: 12),
+                                          Expanded(
+                                            child: Text(
+                                              activity,
+                                              style: GoogleFonts.poppins(
+                                                fontSize: 13,
+                                                fontWeight: FontWeight.w500,
+                                                color: isDark
+                                                    ? AppColors.textPrimaryDark
+                                                    : AppColors.textPrimary,
+                                              ),
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                }).toList(),
+                              ),
 
                         const SizedBox(height: 24),
 
@@ -622,6 +744,119 @@ class _DashboardScreenState extends State<DashboardScreen>
             ),
           );
         },
+      ),
+    );
+  }
+
+  /// Builds a list of the 5 most recent activity strings from schedules + health records.
+  List<String> _buildRecentActivities(
+    ScheduleProvider scheduleProvider,
+    HealthProvider healthProvider,
+    PetProvider petProvider,
+  ) {
+    final locale = context.read<LocaleProvider>();
+    final t = locale.translate;
+
+    // Collect completed schedules as activity entries
+    final scheduleActivities = scheduleProvider.schedules
+        .where((s) => s.isCompleted)
+        .map((s) {
+      final petName = petProvider.getPetById(s.petId)?.name ?? 'Unknown';
+      return _ActivityEntry(
+        date: s.dateTime,
+        text: '$petName ${t('completed_activity')} ${s.type}',
+      );
+    }).toList();
+
+    // Collect health records as activity entries
+    final healthActivities = healthProvider.records.map((r) {
+      final petName = petProvider.getPetById(r.petId)?.name ?? 'Unknown';
+      final recordType = r.diseaseHistory.isNotEmpty
+          ? r.diseaseHistory
+          : (r.medication.isNotEmpty ? r.medication : 'Check-up');
+      return _ActivityEntry(
+        date: r.checkupDate,
+        text: '$petName ${t('received_activity')} $recordType',
+      );
+    }).toList();
+
+    // Merge, sort by newest first, take 5
+    final allActivities = [...scheduleActivities, ...healthActivities]
+      ..sort((a, b) => b.date.compareTo(a.date));
+
+    return allActivities.take(5).map((a) => a.text).toList();
+  }
+}
+
+/// Simple data class for sorting recent activities by date.
+class _ActivityEntry {
+  final DateTime date;
+  final String text;
+  const _ActivityEntry({required this.date, required this.text});
+}
+
+// ── Animated Stat Card (staggered slide + fade) ──────────────────────────────
+class _AnimatedStatCard extends StatelessWidget {
+  final int index;
+  final Widget child;
+
+  const _AnimatedStatCard({required this.index, required this.child});
+
+  @override
+  Widget build(BuildContext context) {
+    return TweenAnimationBuilder<double>(
+      tween: Tween(begin: 0.0, end: 1.0),
+      duration: Duration(milliseconds: 400 + index * 100),
+      curve: Curves.easeOutCubic,
+      builder: (_, value, childWidget) => Opacity(
+        opacity: value.clamp(0.0, 1.0),
+        child: Transform.translate(
+          offset: Offset(0, 20 * (1 - value)),
+          child: childWidget,
+        ),
+      ),
+      child: child,
+    );
+  }
+}
+
+// ── Empty Activity Card ──────────────────────────────────────────────────────
+class _EmptyActivityCard extends StatelessWidget {
+  final bool isDark;
+  final String label;
+
+  const _EmptyActivityCard({required this.isDark, required this.label});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(28),
+      decoration: BoxDecoration(
+        color: isDark ? AppColors.cardDark : Colors.white,
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.04),
+            blurRadius: 12,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Column(
+        children: [
+          Icon(Icons.history,
+              size: 52,
+              color: isDark ? Colors.grey[600] : Colors.grey[300]),
+          const SizedBox(height: 12),
+          Text(
+            label,
+            style: GoogleFonts.poppins(
+              fontSize: 14,
+              color: isDark ? AppColors.textSecondaryDark : Colors.grey[400],
+            ),
+          ),
+        ],
       ),
     );
   }

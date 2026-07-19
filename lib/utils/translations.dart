@@ -36,6 +36,13 @@ class AppTranslations {
     'tip_6_title': 'Ideal Diet for Senior Cats', 'tip_6_desc': 'Senior cats need more protein and fewer calories. Look for foods with joint support supplements like glucosamine and omega fatty acids.',
     'tip_7_title': 'How Often Should You Bathe Your Dog?', 'tip_7_desc': 'Most dogs only need a bath every 4-6 weeks, unless they get dirty or have skin conditions. Over-bathing can strip natural oils from their coat.',
     'tip_8_title': 'Creating a Pet Emergency Kit', 'tip_8_desc': 'Include first aid supplies, medications, copies of vet records, food, water, a leash, and a carrier. Update the kit every 6 months.',
+    // ── New keys for Dashboard Statistics & Schedule Enhancements ──
+    'pet_statistics': 'Pet Statistics', 'tomorrows_schedule': "Tomorrow's Schedule", 'completed_tasks': 'Completed Tasks', 'overdue_tasks': 'Overdue Tasks', 'total_vaccinations': 'Total Vaccinations',
+    'recent_activity': 'Recent Activity', 'no_recent_activity': 'No recent activity yet.', 'completed_activity': 'completed', 'received_activity': 'received',
+    'filter_all': 'All', 'filter_today': 'Today', 'filter_tomorrow': 'Tomorrow', 'filter_this_week': 'This Week', 'filter_completed': 'Completed', 'filter_overdue': 'Overdue',
+    'sort_nearest_time': 'Nearest Time', 'sort_latest_time': 'Latest Time', 'sort_pet_name': 'Pet Name (A-Z)', 'sort_activity_type': 'Activity Type', 'sort_by': 'Sort By',
+    'no_schedules_category': 'There are no schedules in this category.',
+    'status_completed': 'Completed', 'status_today': 'Today', 'status_upcoming': 'Upcoming', 'status_overdue': 'Overdue',
   };
 
   static const Map<String, String> _id = {
@@ -55,6 +62,13 @@ class AppTranslations {
     'tip_6_title': 'Diet Ideal Kucing Senior', 'tip_6_desc': 'Kucing senior butuh lebih banyak protein dan sedikit kalori. Cari makanan dengan suplemen pendukung sendi seperti glukosamin.',
     'tip_7_title': 'Seberapa Sering Memandikan Anjing?', 'tip_7_desc': 'Sebagian besar anjing hanya perlu mandi setiap 4-6 minggu, kecuali mereka kotor atau punya masalah kulit.',
     'tip_8_title': 'Membuat Kit Darurat Hewan', 'tip_8_desc': 'Sertakan obat, salinan rekam medis, makanan, air, tali, dan kandang (carrier). Perbarui kit setiap 6 bulan.',
+    // ── New keys ──
+    'pet_statistics': 'Statistik Hewan', 'tomorrows_schedule': 'Jadwal Besok', 'completed_tasks': 'Tugas Selesai', 'overdue_tasks': 'Tugas Terlambat', 'total_vaccinations': 'Total Vaksinasi',
+    'recent_activity': 'Aktivitas Terbaru', 'no_recent_activity': 'Belum ada aktivitas terbaru.', 'completed_activity': 'menyelesaikan', 'received_activity': 'menerima',
+    'filter_all': 'Semua', 'filter_today': 'Hari Ini', 'filter_tomorrow': 'Besok', 'filter_this_week': 'Minggu Ini', 'filter_completed': 'Selesai', 'filter_overdue': 'Terlambat',
+    'sort_nearest_time': 'Waktu Terdekat', 'sort_latest_time': 'Waktu Terbaru', 'sort_pet_name': 'Nama Hewan (A-Z)', 'sort_activity_type': 'Jenis Aktivitas', 'sort_by': 'Urutkan',
+    'no_schedules_category': 'Tidak ada jadwal dalam kategori ini.',
+    'status_completed': 'Selesai', 'status_today': 'Hari Ini', 'status_upcoming': 'Mendatang', 'status_overdue': 'Terlambat',
   };
 
   static const Map<String, String> _es = {
@@ -64,6 +78,13 @@ class AppTranslations {
     'pet_library': 'Biblioteca', 'explore_breeds': 'Explorar razas', 'dogs': 'Perros', 'cats': 'Gatos', 'dog_breeds': 'Razas de Perros', 'cat_breeds': 'Razas de Gatos', 'search_breeds': 'Buscar razas...', 'no_breeds_found': 'No se encontraron razas', 'lifespan': 'Esperanza', 'origin': 'Origen', 'habitat': 'Hábitat', 'temperament': 'Temperamento', 'characteristics': 'Características', 'about': 'Acerca de', 'size': 'Tamaño', 'favorites': 'Favoritos', 'add_favorite': 'Añadir Favorito', 'remove_favorite': 'Quitar Favorito', 'no_favorites': 'Sin favoritos', 'add_to_favorites': 'Toca para añadir',
     'diseases': 'Enfermedades', 'diseases_sub': 'Enciclopedia médica', 'library_hub': 'Biblioteca', 'library_hub_sub': 'Explorar guías', 'diseases_count': 'enfermedades', 'search_diseases': 'Buscar enfermedades...', 'all': 'Todo', 'mild': 'Leve', 'moderate': 'Moderado', 'severe': 'Grave', 'critical': 'Crítico', 'no_diseases_found': 'No se encontraron enfermedades',
     'profile': 'Perfil', 'dark_mode': 'Modo Oscuro', 'dark_mode_sub': 'Cambiar tema', 'about_app': 'Acerca de', 'logout': 'Cerrar Sesión', 'logout_confirm': '¿Seguro que quieres salir?', 'language_settings': 'Configuración de Idioma', 'language_settings_sub': 'Cambiar idioma',
+    // ── New keys ──
+    'pet_statistics': 'Estadísticas de Mascotas', 'tomorrows_schedule': 'Horario de Mañana', 'completed_tasks': 'Tareas Completadas', 'overdue_tasks': 'Tareas Vencidas', 'total_vaccinations': 'Total Vacunas',
+    'recent_activity': 'Actividad Reciente', 'no_recent_activity': 'Sin actividad reciente.', 'completed_activity': 'completó', 'received_activity': 'recibió',
+    'filter_all': 'Todo', 'filter_today': 'Hoy', 'filter_tomorrow': 'Mañana', 'filter_this_week': 'Esta Semana', 'filter_completed': 'Completado', 'filter_overdue': 'Vencido',
+    'sort_nearest_time': 'Más Cercano', 'sort_latest_time': 'Más Reciente', 'sort_pet_name': 'Nombre (A-Z)', 'sort_activity_type': 'Tipo de Actividad', 'sort_by': 'Ordenar',
+    'no_schedules_category': 'No hay horarios en esta categoría.',
+    'status_completed': 'Completado', 'status_today': 'Hoy', 'status_upcoming': 'Próximo', 'status_overdue': 'Vencido',
   };
 
   static const Map<String, String> _fr = {
@@ -73,6 +94,13 @@ class AppTranslations {
     'pet_library': 'Bibliothèque', 'explore_breeds': 'Explorer les races', 'dogs': 'Chiens', 'cats': 'Chats', 'dog_breeds': 'Races Chiens', 'cat_breeds': 'Races Chats', 'search_breeds': 'Chercher...', 'no_breeds_found': 'Aucune race', 'lifespan': 'Durée de vie', 'origin': 'Origine', 'habitat': 'Habitat', 'temperament': 'Tempérament', 'characteristics': 'Caractéristiques', 'about': 'À propos', 'size': 'Taille', 'favorites': 'Favoris', 'add_favorite': 'Ajouter aux favoris', 'remove_favorite': 'Retirer des favoris', 'no_favorites': 'Pas de favoris', 'add_to_favorites': 'Touchez pour ajouter',
     'diseases': 'Maladies', 'diseases_sub': 'Encyclopédie', 'library_hub': 'Bibliothèque', 'library_hub_sub': 'Explorer', 'diseases_count': 'maladies', 'search_diseases': 'Chercher...', 'all': 'Tout', 'mild': 'Léger', 'moderate': 'Modéré', 'severe': 'Grave', 'critical': 'Critique', 'no_diseases_found': 'Aucun',
     'profile': 'Profil', 'dark_mode': 'Mode Sombre', 'dark_mode_sub': 'Basculer', 'about_app': 'À propos', 'logout': 'Déconnexion', 'logout_confirm': 'Quitter?', 'language_settings': 'Paramètres de Langue', 'language_settings_sub': 'Changer la langue',
+    // ── New keys ──
+    'pet_statistics': 'Statistiques Animaux', 'tomorrows_schedule': 'Horaire de Demain', 'completed_tasks': 'Tâches Terminées', 'overdue_tasks': 'Tâches en Retard', 'total_vaccinations': 'Total Vaccinations',
+    'recent_activity': 'Activité Récente', 'no_recent_activity': 'Aucune activité récente.', 'completed_activity': 'a terminé', 'received_activity': 'a reçu',
+    'filter_all': 'Tout', 'filter_today': 'Aujourd\'hui', 'filter_tomorrow': 'Demain', 'filter_this_week': 'Cette Semaine', 'filter_completed': 'Terminé', 'filter_overdue': 'En Retard',
+    'sort_nearest_time': 'Plus Proche', 'sort_latest_time': 'Plus Récent', 'sort_pet_name': 'Nom (A-Z)', 'sort_activity_type': 'Type d\'Activité', 'sort_by': 'Trier',
+    'no_schedules_category': 'Aucun horaire dans cette catégorie.',
+    'status_completed': 'Terminé', 'status_today': 'Aujourd\'hui', 'status_upcoming': 'À Venir', 'status_overdue': 'En Retard',
   };
 
   static const Map<String, String> _de = {
@@ -82,6 +110,13 @@ class AppTranslations {
     'pet_library': 'Bibliothek', 'explore_breeds': 'Rassen', 'dogs': 'Hunde', 'cats': 'Katzen', 'dog_breeds': 'Hunderassen', 'cat_breeds': 'Katzenrassen', 'search_breeds': 'Rassen suchen...', 'no_breeds_found': 'Keine gefunden', 'lifespan': 'Lebensdauer', 'origin': 'Herkunft', 'habitat': 'Lebensraum', 'temperament': 'Temperament', 'characteristics': 'Merkmale', 'about': 'Über', 'size': 'Größe', 'favorites': 'Favoriten', 'add_favorite': 'Hinzufügen', 'remove_favorite': 'Entfernen', 'no_favorites': 'Keine Favoriten', 'add_to_favorites': 'Tippen zum Hinzufügen',
     'diseases': 'Krankheiten', 'diseases_sub': 'Enzyklopädie', 'library_hub': 'Bibliothek', 'library_hub_sub': 'Erkunden', 'diseases_count': 'Krankheiten', 'search_diseases': 'Suchen...', 'all': 'Alle', 'mild': 'Leicht', 'moderate': 'Mittel', 'severe': 'Schwer', 'critical': 'Kritisch', 'no_diseases_found': 'Keine gefunden',
     'profile': 'Profil', 'dark_mode': 'Dunkelmodus', 'dark_mode_sub': 'Umschalten', 'about_app': 'Über', 'logout': 'Abmelden', 'logout_confirm': 'Wirklich abmelden?', 'language_settings': 'Sprache', 'language_settings_sub': 'Ändern',
+    // ── New keys ──
+    'pet_statistics': 'Tierstatistiken', 'tomorrows_schedule': 'Morgiger Zeitplan', 'completed_tasks': 'Erledigte Aufgaben', 'overdue_tasks': 'Überfällige Aufgaben', 'total_vaccinations': 'Impfungen Gesamt',
+    'recent_activity': 'Letzte Aktivität', 'no_recent_activity': 'Keine Aktivität bisher.', 'completed_activity': 'hat abgeschlossen', 'received_activity': 'hat erhalten',
+    'filter_all': 'Alle', 'filter_today': 'Heute', 'filter_tomorrow': 'Morgen', 'filter_this_week': 'Diese Woche', 'filter_completed': 'Erledigt', 'filter_overdue': 'Überfällig',
+    'sort_nearest_time': 'Nächste Zeit', 'sort_latest_time': 'Neueste Zeit', 'sort_pet_name': 'Name (A-Z)', 'sort_activity_type': 'Aktivitätstyp', 'sort_by': 'Sortieren',
+    'no_schedules_category': 'Keine Termine in dieser Kategorie.',
+    'status_completed': 'Erledigt', 'status_today': 'Heute', 'status_upcoming': 'Bevorstehend', 'status_overdue': 'Überfällig',
   };
 
   static const Map<String, String> _it = {
@@ -91,6 +126,13 @@ class AppTranslations {
     'pet_library': 'Libreria', 'explore_breeds': 'Razze', 'dogs': 'Cani', 'cats': 'Gatti', 'dog_breeds': 'Razze Canine', 'cat_breeds': 'Razze Feline', 'search_breeds': 'Cerca...', 'no_breeds_found': 'Non trovato', 'lifespan': 'Durata', 'origin': 'Origine', 'habitat': 'Habitat', 'temperament': 'Temperamento', 'characteristics': 'Caratteristiche', 'about': 'Info', 'size': 'Taglia', 'favorites': 'Preferiti', 'add_favorite': 'Aggiungi', 'remove_favorite': 'Rimuovi', 'no_favorites': 'Vuoto', 'add_to_favorites': 'Tocca per aggiungere',
     'diseases': 'Malattie', 'diseases_sub': 'Enciclopedia', 'library_hub': 'Libreria', 'library_hub_sub': 'Esplora', 'diseases_count': 'malattie', 'search_diseases': 'Cerca...', 'all': 'Tutto', 'mild': 'Lieve', 'moderate': 'Moderato', 'severe': 'Grave', 'critical': 'Critico', 'no_diseases_found': 'Non trovato',
     'profile': 'Profilo', 'dark_mode': 'Modalità Scura', 'dark_mode_sub': 'Cambia tema', 'about_app': 'Info', 'logout': 'Esci', 'logout_confirm': 'Vuoi uscire?', 'language_settings': 'Impostazioni Lingua', 'language_settings_sub': 'Cambia',
+    // ── New keys ──
+    'pet_statistics': 'Statistiche Animali', 'tomorrows_schedule': 'Programma di Domani', 'completed_tasks': 'Compiti Completati', 'overdue_tasks': 'Compiti in Ritardo', 'total_vaccinations': 'Totale Vaccinazioni',
+    'recent_activity': 'Attività Recente', 'no_recent_activity': 'Nessuna attività recente.', 'completed_activity': 'ha completato', 'received_activity': 'ha ricevuto',
+    'filter_all': 'Tutto', 'filter_today': 'Oggi', 'filter_tomorrow': 'Domani', 'filter_this_week': 'Questa Settimana', 'filter_completed': 'Completato', 'filter_overdue': 'In Ritardo',
+    'sort_nearest_time': 'Più Vicino', 'sort_latest_time': 'Più Recente', 'sort_pet_name': 'Nome (A-Z)', 'sort_activity_type': 'Tipo Attività', 'sort_by': 'Ordina',
+    'no_schedules_category': 'Nessun programma in questa categoria.',
+    'status_completed': 'Completato', 'status_today': 'Oggi', 'status_upcoming': 'In Arrivo', 'status_overdue': 'In Ritardo',
   };
 
   static const Map<String, String> _pt = {
@@ -100,6 +142,13 @@ class AppTranslations {
     'pet_library': 'Biblioteca', 'explore_breeds': 'Raças', 'dogs': 'Cães', 'cats': 'Gatos', 'dog_breeds': 'Raças Cães', 'cat_breeds': 'Raças Gatos', 'search_breeds': 'Buscar...', 'no_breeds_found': 'Não encontrado', 'lifespan': 'Vida', 'origin': 'Origem', 'habitat': 'Habitat', 'temperament': 'Temperamento', 'characteristics': 'Características', 'about': 'Sobre', 'size': 'Tamanho', 'favorites': 'Favoritos', 'add_favorite': 'Adicionar', 'remove_favorite': 'Remover', 'no_favorites': 'Vazio', 'add_to_favorites': 'Adicionar',
     'diseases': 'Doenças', 'diseases_sub': 'Enciclopédia', 'library_hub': 'Biblioteca', 'library_hub_sub': 'Explorar', 'diseases_count': 'doenças', 'search_diseases': 'Buscar...', 'all': 'Tudo', 'mild': 'Leve', 'moderate': 'Moderado', 'severe': 'Grave', 'critical': 'Crítico', 'no_diseases_found': 'Nenhum',
     'profile': 'Perfil', 'dark_mode': 'Modo Escuro', 'dark_mode_sub': 'Mudar tema', 'about_app': 'Sobre', 'logout': 'Sair', 'logout_confirm': 'Certeza que deseja sair?', 'language_settings': 'Idioma', 'language_settings_sub': 'Mudar',
+    // ── New keys ──
+    'pet_statistics': 'Estatísticas de Pets', 'tomorrows_schedule': 'Agenda de Amanhã', 'completed_tasks': 'Tarefas Concluídas', 'overdue_tasks': 'Tarefas Atrasadas', 'total_vaccinations': 'Total Vacinações',
+    'recent_activity': 'Atividade Recente', 'no_recent_activity': 'Nenhuma atividade recente.', 'completed_activity': 'completou', 'received_activity': 'recebeu',
+    'filter_all': 'Tudo', 'filter_today': 'Hoje', 'filter_tomorrow': 'Amanhã', 'filter_this_week': 'Esta Semana', 'filter_completed': 'Concluído', 'filter_overdue': 'Atrasado',
+    'sort_nearest_time': 'Mais Próximo', 'sort_latest_time': 'Mais Recente', 'sort_pet_name': 'Nome (A-Z)', 'sort_activity_type': 'Tipo de Atividade', 'sort_by': 'Ordenar',
+    'no_schedules_category': 'Não há agendas nesta categoria.',
+    'status_completed': 'Concluído', 'status_today': 'Hoje', 'status_upcoming': 'Próximo', 'status_overdue': 'Atrasado',
   };
 
   static const Map<String, String> _ru = {
@@ -109,6 +158,13 @@ class AppTranslations {
     'pet_library': 'Библиотека', 'explore_breeds': 'Породы', 'dogs': 'Собаки', 'cats': 'Кошки', 'dog_breeds': 'Породы собак', 'cat_breeds': 'Породы кошек', 'search_breeds': 'Искать...', 'no_breeds_found': 'Не найдено', 'lifespan': 'Жизнь', 'origin': 'Происхождение', 'habitat': 'Среда', 'temperament': 'Характер', 'characteristics': 'Черты', 'about': 'О', 'size': 'Размер', 'favorites': 'Избранное', 'add_favorite': 'Добавить', 'remove_favorite': 'Убрать', 'no_favorites': 'Пусто', 'add_to_favorites': 'Нажмите чтобы добавить',
     'diseases': 'Болезни', 'diseases_sub': 'Энциклопедия', 'library_hub': 'Библиотека', 'library_hub_sub': 'Исследовать', 'diseases_count': 'болезней', 'search_diseases': 'Поиск...', 'all': 'Все', 'mild': 'Легкая', 'moderate': 'Умер.', 'severe': 'Тяжел.', 'critical': 'Критич.', 'no_diseases_found': 'Ничего',
     'profile': 'Профиль', 'dark_mode': 'Темная тема', 'dark_mode_sub': 'Изменить', 'about_app': 'О нас', 'logout': 'Выйти', 'logout_confirm': 'Точно выйти?', 'language_settings': 'Языки', 'language_settings_sub': 'Сменить',
+    // ── New keys ──
+    'pet_statistics': 'Статистика Питомцев', 'tomorrows_schedule': 'Расписание на Завтра', 'completed_tasks': 'Завершённые Задачи', 'overdue_tasks': 'Просроченные Задачи', 'total_vaccinations': 'Всего Прививок',
+    'recent_activity': 'Последняя Активность', 'no_recent_activity': 'Нет недавней активности.', 'completed_activity': 'завершил', 'received_activity': 'получил',
+    'filter_all': 'Все', 'filter_today': 'Сегодня', 'filter_tomorrow': 'Завтра', 'filter_this_week': 'Эта Неделя', 'filter_completed': 'Завершено', 'filter_overdue': 'Просрочено',
+    'sort_nearest_time': 'Ближайшее', 'sort_latest_time': 'Последнее', 'sort_pet_name': 'Имя (А-Я)', 'sort_activity_type': 'Тип Активности', 'sort_by': 'Сортировка',
+    'no_schedules_category': 'Нет расписаний в этой категории.',
+    'status_completed': 'Завершено', 'status_today': 'Сегодня', 'status_upcoming': 'Предстоящее', 'status_overdue': 'Просрочено',
   };
 
   static const Map<String, String> _ja = {
@@ -118,6 +174,13 @@ class AppTranslations {
     'pet_library': '図書館', 'explore_breeds': '品種', 'dogs': '犬', 'cats': '猫', 'dog_breeds': '犬種', 'cat_breeds': '猫種', 'search_breeds': '検索...', 'no_breeds_found': '見つかりません', 'lifespan': '寿命', 'origin': '起源', 'habitat': '生息地', 'temperament': '気質', 'characteristics': '特徴', 'about': 'について', 'size': 'サイズ', 'favorites': 'お気に入り', 'add_favorite': '追加', 'remove_favorite': '削除', 'no_favorites': '空', 'add_to_favorites': '追加する',
     'diseases': '病気', 'diseases_sub': '百科事典', 'library_hub': '図書館', 'library_hub_sub': '探検する', 'diseases_count': '病気', 'search_diseases': '検索...', 'all': 'すべて', 'mild': '軽度', 'moderate': '中等度', 'severe': '重度', 'critical': '致命的', 'no_diseases_found': 'ありません',
     'profile': 'プロファイル', 'dark_mode': 'ダークモード', 'dark_mode_sub': '変更', 'about_app': 'アプリについて', 'logout': 'ログアウト', 'logout_confirm': 'ログアウトしますか？', 'language_settings': '言語設定', 'language_settings_sub': '変更',
+    // ── New keys ──
+    'pet_statistics': 'ペット統計', 'tomorrows_schedule': '明日の予定', 'completed_tasks': '完了タスク', 'overdue_tasks': '期限超過タスク', 'total_vaccinations': '予防接種合計',
+    'recent_activity': '最近の活動', 'no_recent_activity': 'まだ最近の活動はありません。', 'completed_activity': 'を完了', 'received_activity': 'を受けた',
+    'filter_all': 'すべて', 'filter_today': '今日', 'filter_tomorrow': '明日', 'filter_this_week': '今週', 'filter_completed': '完了', 'filter_overdue': '期限超過',
+    'sort_nearest_time': '最も近い', 'sort_latest_time': '最新', 'sort_pet_name': '名前 (A-Z)', 'sort_activity_type': '活動タイプ', 'sort_by': '並べ替え',
+    'no_schedules_category': 'このカテゴリにはスケジュールがありません。',
+    'status_completed': '完了', 'status_today': '今日', 'status_upcoming': '予定', 'status_overdue': '期限超過',
   };
 
   static const Map<String, String> _ko = {
@@ -127,6 +190,13 @@ class AppTranslations {
     'pet_library': '도서관', 'explore_breeds': '품종', 'dogs': '개', 'cats': '고양이', 'dog_breeds': '견종', 'cat_breeds': '묘종', 'search_breeds': '검색...', 'no_breeds_found': '결과 없음', 'lifespan': '수명', 'origin': '기원', 'habitat': '서식지', 'temperament': '성격', 'characteristics': '특징', 'about': '정보', 'size': '크기', 'favorites': '즐겨찾기', 'add_favorite': '추가', 'remove_favorite': '제거', 'no_favorites': '없음', 'add_to_favorites': '추가하기',
     'diseases': '질병', 'diseases_sub': '백과사전', 'library_hub': '도서관', 'library_hub_sub': '탐색', 'diseases_count': '질병', 'search_diseases': '검색...', 'all': '전체', 'mild': '경증', 'moderate': '중등도', 'severe': '중증', 'critical': '위독', 'no_diseases_found': '결과 없음',
     'profile': '프로필', 'dark_mode': '다크 모드', 'dark_mode_sub': '변경', 'about_app': '앱 정보', 'logout': '로그아웃', 'logout_confirm': '로그아웃 하시겠습니까?', 'language_settings': '언어', 'language_settings_sub': '변경',
+    // ── New keys ──
+    'pet_statistics': '반려동물 통계', 'tomorrows_schedule': '내일 일정', 'completed_tasks': '완료된 작업', 'overdue_tasks': '지연된 작업', 'total_vaccinations': '총 예방접종',
+    'recent_activity': '최근 활동', 'no_recent_activity': '최근 활동이 없습니다.', 'completed_activity': '완료', 'received_activity': '받음',
+    'filter_all': '전체', 'filter_today': '오늘', 'filter_tomorrow': '내일', 'filter_this_week': '이번 주', 'filter_completed': '완료', 'filter_overdue': '지연',
+    'sort_nearest_time': '가장 가까운', 'sort_latest_time': '최신', 'sort_pet_name': '이름 (A-Z)', 'sort_activity_type': '활동 유형', 'sort_by': '정렬',
+    'no_schedules_category': '이 카테고리에 일정이 없습니다.',
+    'status_completed': '완료', 'status_today': '오늘', 'status_upcoming': '예정', 'status_overdue': '지연',
   };
 
   static const Map<String, String> _zh = {
@@ -136,6 +206,13 @@ class AppTranslations {
     'pet_library': '图书馆', 'explore_breeds': '探索品种', 'dogs': '狗', 'cats': '猫', 'dog_breeds': '犬种', 'cat_breeds': '猫种', 'search_breeds': '搜索...', 'no_breeds_found': '未找到', 'lifespan': '寿命', 'origin': '起源', 'habitat': '栖息地', 'temperament': '气质', 'characteristics': '特征', 'about': '关于', 'size': '体型', 'favorites': '收藏', 'add_favorite': '添加收藏', 'remove_favorite': '取消收藏', 'no_favorites': '暂无收藏', 'add_to_favorites': '点击添加',
     'diseases': '疾病', 'diseases_sub': '百科全书', 'library_hub': '图书馆', 'library_hub_sub': '探索指南', 'diseases_count': '种疾病', 'search_diseases': '搜索疾病...', 'all': '全部', 'mild': '轻微', 'moderate': '中度', 'severe': '严重', 'critical': '危重', 'no_diseases_found': '无结果',
     'profile': '我的', 'dark_mode': '深色模式', 'dark_mode_sub': '切换主题', 'about_app': '关于我', 'logout': '退出', 'logout_confirm': '确定要退出吗？', 'language_settings': '语言设置', 'language_settings_sub': '更改',
+    // ── New keys ──
+    'pet_statistics': '宠物统计', 'tomorrows_schedule': '明日日程', 'completed_tasks': '已完成任务', 'overdue_tasks': '逾期任务', 'total_vaccinations': '疫苗接种总数',
+    'recent_activity': '最近活动', 'no_recent_activity': '暂无最近活动。', 'completed_activity': '完成了', 'received_activity': '接受了',
+    'filter_all': '全部', 'filter_today': '今天', 'filter_tomorrow': '明天', 'filter_this_week': '本周', 'filter_completed': '已完成', 'filter_overdue': '逾期',
+    'sort_nearest_time': '最近时间', 'sort_latest_time': '最晚时间', 'sort_pet_name': '名字 (A-Z)', 'sort_activity_type': '活动类型', 'sort_by': '排序',
+    'no_schedules_category': '此类别暂无日程。',
+    'status_completed': '已完成', 'status_today': '今天', 'status_upcoming': '即将到来', 'status_overdue': '逾期',
   };
 
   static const Map<String, String> _ar = {
@@ -145,6 +222,13 @@ class AppTranslations {
     'pet_library': 'المكتبة', 'explore_breeds': 'السلالات', 'dogs': 'كلاب', 'cats': 'قطط', 'dog_breeds': 'سلالات الكلاب', 'cat_breeds': 'سلالات القطط', 'search_breeds': 'بحث...', 'no_breeds_found': 'لا يوجد', 'lifespan': 'العمر', 'origin': 'الأصل', 'habitat': 'البيئة', 'temperament': 'المزاج', 'characteristics': 'الميزات', 'about': 'عن', 'size': 'الحجم', 'favorites': 'المفضلة', 'add_favorite': 'إضافة', 'remove_favorite': 'حذف', 'no_favorites': 'فارغ', 'add_to_favorites': 'إضافة مفضلة',
     'diseases': 'الأمراض', 'diseases_sub': 'موسوعة', 'library_hub': 'المكتبة', 'library_hub_sub': 'اكتشف', 'diseases_count': 'مرض', 'search_diseases': 'بحث...', 'all': 'الكل', 'mild': 'خفيف', 'moderate': 'متوسط', 'severe': 'خطير', 'critical': 'حرج', 'no_diseases_found': 'لا يوجد',
     'profile': 'الملف', 'dark_mode': 'الوضع الداكن', 'dark_mode_sub': 'تبديل', 'about_app': 'عن التطبيق', 'logout': 'تسجيل الخروج', 'logout_confirm': 'متأكد؟', 'language_settings': 'اللغة', 'language_settings_sub': 'تغيير',
+    // ── New keys ──
+    'pet_statistics': 'إحصائيات الحيوانات', 'tomorrows_schedule': 'جدول الغد', 'completed_tasks': 'المهام المكتملة', 'overdue_tasks': 'المهام المتأخرة', 'total_vaccinations': 'إجمالي التطعيمات',
+    'recent_activity': 'النشاط الأخير', 'no_recent_activity': 'لا يوجد نشاط حديث.', 'completed_activity': 'أكمل', 'received_activity': 'تلقى',
+    'filter_all': 'الكل', 'filter_today': 'اليوم', 'filter_tomorrow': 'غداً', 'filter_this_week': 'هذا الأسبوع', 'filter_completed': 'مكتمل', 'filter_overdue': 'متأخر',
+    'sort_nearest_time': 'الأقرب', 'sort_latest_time': 'الأحدث', 'sort_pet_name': 'الاسم (أ-ي)', 'sort_activity_type': 'نوع النشاط', 'sort_by': 'ترتيب',
+    'no_schedules_category': 'لا توجد جداول في هذه الفئة.',
+    'status_completed': 'مكتمل', 'status_today': 'اليوم', 'status_upcoming': 'قادم', 'status_overdue': 'متأخر',
   };
 
   static const Map<String, String> _hi = {
@@ -154,6 +238,13 @@ class AppTranslations {
     'pet_library': 'पुस्तकालय', 'explore_breeds': 'नस्लें', 'dogs': 'कुत्ते', 'cats': 'बिल्लियाँ', 'dog_breeds': 'कुत्ते', 'cat_breeds': 'बिल्लियाँ', 'search_breeds': 'खोजें...', 'no_breeds_found': 'नहीं मिला', 'lifespan': 'जीवनकाल', 'origin': 'मूल', 'habitat': 'पर्यावरण', 'temperament': 'स्वभाव', 'characteristics': 'विशेषताएं', 'about': 'के बारे में', 'size': 'आकार', 'favorites': 'पसंदीदा', 'add_favorite': 'जोड़ें', 'remove_favorite': 'हटाएं', 'no_favorites': 'खाली', 'add_to_favorites': 'पसंदीदा जोड़ें',
     'diseases': 'रोग', 'diseases_sub': 'ज्ञानकोश', 'library_hub': 'पुस्तकालय', 'library_hub_sub': 'खोजें', 'diseases_count': 'रोग', 'search_diseases': 'खोजें...', 'all': 'सभी', 'mild': 'हल्का', 'moderate': 'मध्यम', 'severe': 'गंभीर', 'critical': 'अति गंभीर', 'no_diseases_found': 'नहीं मिला',
     'profile': 'प्रोफ़ाइल', 'dark_mode': 'डार्क मोड', 'dark_mode_sub': 'बदलें', 'about_app': 'बारे में', 'logout': 'लॉग आउट', 'logout_confirm': 'क्या आप बाहर जाना चाहते हैं?', 'language_settings': 'भाषा', 'language_settings_sub': 'बदलें',
+    // ── New keys ──
+    'pet_statistics': 'पालतू आँकड़े', 'tomorrows_schedule': 'कल का कार्यक्रम', 'completed_tasks': 'पूर्ण कार्य', 'overdue_tasks': 'विलंबित कार्य', 'total_vaccinations': 'कुल टीकाकरण',
+    'recent_activity': 'हालिया गतिविधि', 'no_recent_activity': 'अभी तक कोई गतिविधि नहीं।', 'completed_activity': 'पूरा किया', 'received_activity': 'प्राप्त किया',
+    'filter_all': 'सभी', 'filter_today': 'आज', 'filter_tomorrow': 'कल', 'filter_this_week': 'इस सप्ताह', 'filter_completed': 'पूर्ण', 'filter_overdue': 'विलंबित',
+    'sort_nearest_time': 'निकटतम', 'sort_latest_time': 'नवीनतम', 'sort_pet_name': 'नाम (A-Z)', 'sort_activity_type': 'गतिविधि प्रकार', 'sort_by': 'क्रमबद्ध',
+    'no_schedules_category': 'इस श्रेणी में कोई कार्यक्रम नहीं है।',
+    'status_completed': 'पूर्ण', 'status_today': 'आज', 'status_upcoming': 'आगामी', 'status_overdue': 'विलंबित',
   };
 
   static const Map<String, String> _tr = {
@@ -163,6 +254,13 @@ class AppTranslations {
     'pet_library': 'Kütüphane', 'explore_breeds': 'Irklar', 'dogs': 'Köpekler', 'cats': 'Kediler', 'dog_breeds': 'Köpek Irkları', 'cat_breeds': 'Kedi Irkları', 'search_breeds': 'Ara...', 'no_breeds_found': 'Bulunamadı', 'lifespan': 'Ömür', 'origin': 'Köken', 'habitat': 'Habitat', 'temperament': 'Mizaç', 'characteristics': 'Özellikler', 'about': 'Hakkında', 'size': 'Boyut', 'favorites': 'Favoriler', 'add_favorite': 'Ekle', 'remove_favorite': 'Kaldır', 'no_favorites': 'Boş', 'add_to_favorites': 'Favorilere ekle',
     'diseases': 'Hastalıklar', 'diseases_sub': 'Ansiklopedi', 'library_hub': 'Kütüphane', 'library_hub_sub': 'Keşfet', 'diseases_count': 'hastalık', 'search_diseases': 'Ara...', 'all': 'Hepsi', 'mild': 'Hafif', 'moderate': 'Orta', 'severe': 'Ağır', 'critical': 'Kritik', 'no_diseases_found': 'Bulunamadı',
     'profile': 'Profil', 'dark_mode': 'Karanlık Mod', 'dark_mode_sub': 'Değiştir', 'about_app': 'Hakkında', 'logout': 'Çıkış', 'logout_confirm': 'Emin misiniz?', 'language_settings': 'Dil Ayarları', 'language_settings_sub': 'Değiştir',
+    // ── New keys ──
+    'pet_statistics': 'Hayvan İstatistikleri', 'tomorrows_schedule': 'Yarının Programı', 'completed_tasks': 'Tamamlanan Görevler', 'overdue_tasks': 'Gecikmiş Görevler', 'total_vaccinations': 'Toplam Aşılar',
+    'recent_activity': 'Son Aktivite', 'no_recent_activity': 'Henüz aktivite yok.', 'completed_activity': 'tamamladı', 'received_activity': 'aldı',
+    'filter_all': 'Hepsi', 'filter_today': 'Bugün', 'filter_tomorrow': 'Yarın', 'filter_this_week': 'Bu Hafta', 'filter_completed': 'Tamamlandı', 'filter_overdue': 'Gecikmiş',
+    'sort_nearest_time': 'En Yakın', 'sort_latest_time': 'En Son', 'sort_pet_name': 'İsim (A-Z)', 'sort_activity_type': 'Aktivite Türü', 'sort_by': 'Sırala',
+    'no_schedules_category': 'Bu kategoride program yok.',
+    'status_completed': 'Tamamlandı', 'status_today': 'Bugün', 'status_upcoming': 'Yaklaşan', 'status_overdue': 'Gecikmiş',
   };
 
   static const Map<String, String> _nl = {
@@ -172,6 +270,13 @@ class AppTranslations {
     'pet_library': 'Bibliotheek', 'explore_breeds': 'Rassen', 'dogs': 'Honden', 'cats': 'Katten', 'dog_breeds': 'Hondenrassen', 'cat_breeds': 'Kattenrassen', 'search_breeds': 'Zoeken...', 'no_breeds_found': 'Geen gevonden', 'lifespan': 'Levensduur', 'origin': 'Oorsprong', 'habitat': 'Leefgebied', 'temperament': 'Karakter', 'characteristics': 'Kenmerken', 'about': 'Over', 'size': 'Grootte', 'favorites': 'Favorieten', 'add_favorite': 'Toevoegen', 'remove_favorite': 'Verwijderen', 'no_favorites': 'Leeg', 'add_to_favorites': 'Voeg toe aan favorieten',
     'diseases': 'Ziekten', 'diseases_sub': 'Encyclopedie', 'library_hub': 'Bibliotheek', 'library_hub_sub': 'Ontdekken', 'diseases_count': 'ziekten', 'search_diseases': 'Zoeken...', 'all': 'Alles', 'mild': 'Mild', 'moderate': 'Matig', 'severe': 'Ernstig', 'critical': 'Kritiek', 'no_diseases_found': 'Geen gevonden',
     'profile': 'Profiel', 'dark_mode': 'Donkere modus', 'dark_mode_sub': 'Omschakelen', 'about_app': 'Over', 'logout': 'Uitloggen', 'logout_confirm': 'Uitloggen?', 'language_settings': 'Taal', 'language_settings_sub': 'Wijzigen',
+    // ── New keys ──
+    'pet_statistics': 'Dierenstatistieken', 'tomorrows_schedule': 'Schema van Morgen', 'completed_tasks': 'Voltooide Taken', 'overdue_tasks': 'Achterstallige Taken', 'total_vaccinations': 'Totaal Vaccinaties',
+    'recent_activity': 'Recente Activiteit', 'no_recent_activity': 'Nog geen recente activiteit.', 'completed_activity': 'heeft voltooid', 'received_activity': 'heeft ontvangen',
+    'filter_all': 'Alles', 'filter_today': 'Vandaag', 'filter_tomorrow': 'Morgen', 'filter_this_week': 'Deze Week', 'filter_completed': 'Voltooid', 'filter_overdue': 'Achterstallig',
+    'sort_nearest_time': 'Dichtstbij', 'sort_latest_time': 'Nieuwste', 'sort_pet_name': 'Naam (A-Z)', 'sort_activity_type': 'Activiteitstype', 'sort_by': 'Sorteren',
+    'no_schedules_category': 'Geen schema in deze categorie.',
+    'status_completed': 'Voltooid', 'status_today': 'Vandaag', 'status_upcoming': 'Aanstaande', 'status_overdue': 'Achterstallig',
   };
 
   static const Map<String, String> _pl = {
@@ -181,6 +286,13 @@ class AppTranslations {
     'pet_library': 'Biblioteka', 'explore_breeds': 'Rasy', 'dogs': 'Psy', 'cats': 'Koty', 'dog_breeds': 'Rasy Psów', 'cat_breeds': 'Rasy Kotów', 'search_breeds': 'Szukaj...', 'no_breeds_found': 'Nie znaleziono', 'lifespan': 'Długość życia', 'origin': 'Pochodzenie', 'habitat': 'Siedlisko', 'temperament': 'Charakter', 'characteristics': 'Cechy', 'about': 'O', 'size': 'Rozmiar', 'favorites': 'Ulubione', 'add_favorite': 'Dodaj', 'remove_favorite': 'Usuń', 'no_favorites': 'Puste', 'add_to_favorites': 'Dodaj do ulub.',
     'diseases': 'Choroby', 'diseases_sub': 'Encyklopedia', 'library_hub': 'Biblioteka', 'library_hub_sub': 'Odkryj', 'diseases_count': 'chorób', 'search_diseases': 'Szukaj...', 'all': 'Wszystko', 'mild': 'Lekkie', 'moderate': 'Średnie', 'severe': 'Ciężkie', 'critical': 'Krytyczne', 'no_diseases_found': 'Nie znaleziono',
     'profile': 'Profil', 'dark_mode': 'Tryb ciemny', 'dark_mode_sub': 'Przełącz', 'about_app': 'O nas', 'logout': 'Wyloguj', 'logout_confirm': 'Na pewno?', 'language_settings': 'Język', 'language_settings_sub': 'Zmień',
+    // ── New keys ──
+    'pet_statistics': 'Statystyki Zwierząt', 'tomorrows_schedule': 'Jutrzejszy Plan', 'completed_tasks': 'Ukończone Zadania', 'overdue_tasks': 'Zaległe Zadania', 'total_vaccinations': 'Łączne Szczepienia',
+    'recent_activity': 'Ostatnia Aktywność', 'no_recent_activity': 'Brak ostatniej aktywności.', 'completed_activity': 'ukończył', 'received_activity': 'otrzymał',
+    'filter_all': 'Wszystko', 'filter_today': 'Dziś', 'filter_tomorrow': 'Jutro', 'filter_this_week': 'Ten Tydzień', 'filter_completed': 'Ukończone', 'filter_overdue': 'Zaległe',
+    'sort_nearest_time': 'Najbliżej', 'sort_latest_time': 'Najnowsze', 'sort_pet_name': 'Nazwa (A-Z)', 'sort_activity_type': 'Typ Aktywności', 'sort_by': 'Sortuj',
+    'no_schedules_category': 'Brak planów w tej kategorii.',
+    'status_completed': 'Ukończone', 'status_today': 'Dziś', 'status_upcoming': 'Nadchodzące', 'status_overdue': 'Zaległe',
   };
 
   static const Map<String, String> _th = {
@@ -190,5 +302,12 @@ class AppTranslations {
     'pet_library': 'ห้องสมุด', 'explore_breeds': 'สายพันธุ์', 'dogs': 'สุนัข', 'cats': 'แมว', 'dog_breeds': 'สุนัข', 'cat_breeds': 'แมว', 'search_breeds': 'ค้นหา...', 'no_breeds_found': 'ไม่พบ', 'lifespan': 'อายุ', 'origin': 'ต้นกำเนิด', 'habitat': 'ที่อยู่อาศัย', 'temperament': 'อารมณ์', 'characteristics': 'ลักษณะ', 'about': 'เกี่ยวกับ', 'size': 'ขนาด', 'favorites': 'รายการโปรด', 'add_favorite': 'เพิ่ม', 'remove_favorite': 'ลบ', 'no_favorites': 'ว่าง', 'add_to_favorites': 'เพิ่มโปรด',
     'diseases': 'โรค', 'diseases_sub': 'สารานุกรม', 'library_hub': 'ห้องสมุด', 'library_hub_sub': 'สำรวจ', 'diseases_count': 'โรค', 'search_diseases': 'ค้นหา...', 'all': 'ทั้งหมด', 'mild': 'เบา', 'moderate': 'ปานกลาง', 'severe': 'รุนแรง', 'critical': 'วิกฤต', 'no_diseases_found': 'ไม่พบ',
     'profile': 'โปรไฟล์', 'dark_mode': 'โหมดมืด', 'dark_mode_sub': 'สลับ', 'about_app': 'เกี่ยวกับ', 'logout': 'ออกจากระบบ', 'logout_confirm': 'แน่ใจหรือไม่?', 'language_settings': 'ภาษา', 'language_settings_sub': 'เปลี่ยน',
+    // ── New keys ──
+    'pet_statistics': 'สถิติสัตว์เลี้ยง', 'tomorrows_schedule': 'ตารางพรุ่งนี้', 'completed_tasks': 'งานที่เสร็จ', 'overdue_tasks': 'งานเลยกำหนด', 'total_vaccinations': 'วัคซีนทั้งหมด',
+    'recent_activity': 'กิจกรรมล่าสุด', 'no_recent_activity': 'ยังไม่มีกิจกรรม', 'completed_activity': 'เสร็จสิ้น', 'received_activity': 'ได้รับ',
+    'filter_all': 'ทั้งหมด', 'filter_today': 'วันนี้', 'filter_tomorrow': 'พรุ่งนี้', 'filter_this_week': 'สัปดาห์นี้', 'filter_completed': 'เสร็จแล้ว', 'filter_overdue': 'เลยกำหนด',
+    'sort_nearest_time': 'ใกล้ที่สุด', 'sort_latest_time': 'ล่าสุด', 'sort_pet_name': 'ชื่อ (A-Z)', 'sort_activity_type': 'ประเภทกิจกรรม', 'sort_by': 'เรียงตาม',
+    'no_schedules_category': 'ไม่มีตารางในหมวดนี้',
+    'status_completed': 'เสร็จแล้ว', 'status_today': 'วันนี้', 'status_upcoming': 'กำลังมา', 'status_overdue': 'เลยกำหนด',
   };
 }

@@ -16,6 +16,26 @@ class ScheduleProvider with ChangeNotifier {
     s.dateTime.day == DateTime.now().day
   ).toList();
 
+  List<Schedule> get tomorrowSchedules {
+    final tomorrow = DateTime.now().add(const Duration(days: 1));
+    return _schedules.where((s) =>
+      s.dateTime.year == tomorrow.year &&
+      s.dateTime.month == tomorrow.month &&
+      s.dateTime.day == tomorrow.day
+    ).toList();
+  }
+
+  List<Schedule> get completedSchedules =>
+      _schedules.where((s) => s.isCompleted).toList();
+
+  List<Schedule> get overdueSchedules {
+    final now = DateTime.now();
+    final todayStart = DateTime(now.year, now.month, now.day);
+    return _schedules.where((s) =>
+      s.dateTime.isBefore(todayStart) && !s.isCompleted
+    ).toList();
+  }
+
   ScheduleProvider() {
     loadSchedules();
   }
